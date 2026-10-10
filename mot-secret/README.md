@@ -30,3 +30,9 @@ HTML/CSS/JS vanilla, 100 % statique → hébergeable sur GitHub Pages, Netlify, 
 - `app.js` : analyse des mots, attribution des dessins (aléatoire reproductible), rendu des pages.
 - `style.css` : mise en page en millimètres pour l'impression A4.
 - `fonts/` : polices hébergées localement (licence SIL OFL, voir `fonts/OFL.txt`), aucune dépendance externe.
+
+## Mise à jour
+
+À chaque modification de `style.css`, `app.js`, `themes.js` ou `fonts/fonts.css`, changer la valeur `?v=…`
+correspondante dans `index.html` (par exemple la date du jour) : les navigateurs rechargent alors le fichier
+au lieu d'utiliser leur cache.
