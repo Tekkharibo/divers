@@ -53,6 +53,8 @@ textarea, input[type="text"], select {
 textarea { resize: vertical; text-transform: none; }
 
 .themes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+.themes-group { grid-column: 1 / -1; font-size: 13px; color: var(--ui-muted); margin-top: 4px; }
+.themes-group:first-child { margin-top: 0; }
 .theme-btn {
   font: inherit;
   font-size: 14px;

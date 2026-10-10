@@ -346,18 +346,22 @@
 
   function renderThemePicker() {
     els.themes.replaceChildren(
-      ...Object.entries(THEMES).map(([key, t]) => {
-        const b = h("button", "theme-btn", `<span>${t.emoji}</span>${t.name}`);
-        b.type = "button";
-        b.setAttribute("role", "radio");
-        b.setAttribute("aria-checked", String(key === state.theme));
-        b.addEventListener("click", () => {
-          state.theme = key;
-          renderThemePicker();
-          render();
-        });
-        return b;
-      })
+      ...window.THEME_GROUPS.flatMap((group) => [
+        h("span", "themes-group", group.label),
+        ...group.keys.map((key) => {
+          const t = THEMES[key];
+          const b = h("button", "theme-btn", `<span>${t.emoji}</span>${t.name}`);
+          b.type = "button";
+          b.setAttribute("role", "radio");
+          b.setAttribute("aria-checked", String(key === state.theme));
+          b.addEventListener("click", () => {
+            state.theme = key;
+            renderThemePicker();
+            render();
+          });
+          return b;
+        }),
+      ])
     );
   }
 

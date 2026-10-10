@@ -5,15 +5,6 @@
 // - accent: couleur des titres / de la correction
 // - words : 20 mots prédéfinis du thème (insérés dans cet ordre, sans tirage au sort)
 window.THEMES = {
-  hiver: {
-    name: "Hiver",
-    emoji: "❄️",
-    bg: ["#d6e4f2", "#f7fbff"],
-    accent: "#2c4f7c",
-    decor: ["❄️", "🌨️", "❄️", "⛄"],
-    icons: ["⛄", "❄️", "🧣", "🧤", "🎿", "⛸️", "🏔️", "☕", "🧊", "🐧", "🛷", "🧦", "🦭", "🌨️", "🐻‍❄️", "🏒"],
-    words: ["hiver", "neige", "froid", "luge", "flocon", "glace", "bonnet", "écharpe", "gants", "moufles", "ski", "patins", "igloo", "pingouin", "manteau", "bonhomme", "glaçon", "sapin", "givre", "chocolat"],
-  },
   automne: {
     name: "Automne",
     emoji: "🍂",
@@ -23,41 +14,23 @@ window.THEMES = {
     icons: ["🍂", "🍁", "🍄", "🌰", "🦔", "🍎", "🐿️", "☔", "🍇", "🥧", "🌽", "🦉", "🧺", "🍐", "🎃", "🌂"],
     words: ["automne", "feuille", "pluie", "champignon", "châtaigne", "marron", "hérisson", "écureuil", "citrouille", "pomme", "raisin", "parapluie", "bottes", "vent", "noisette", "gland", "brouillard", "octobre", "novembre", "récolte"],
   },
-  paques: {
-    name: "Pâques",
-    emoji: "🐣",
-    bg: ["#e6f4d7", "#fffdf2"],
-    accent: "#5d8a2f",
-    decor: ["🌷", "🌼", "🥚", "🌸"],
-    icons: ["🐣", "🐰", "🥚", "🌷", "🐥", "🍫", "🧺", "🌼", "🐑", "🦋", "🌸", "🔔", "🥕", "🐤", "🐇", "🪺"],
-    words: ["pâques", "œuf", "lapin", "poussin", "cloche", "chocolat", "printemps", "panier", "poule", "agneau", "jonquille", "tulipe", "chasse", "nid", "carotte", "fleur", "jardin", "ruban", "cocotte", "avril"],
+  hiver: {
+    name: "Hiver",
+    emoji: "❄️",
+    bg: ["#d6e4f2", "#f7fbff"],
+    accent: "#2c4f7c",
+    decor: ["❄️", "🌨️", "❄️", "⛄"],
+    icons: ["⛄", "❄️", "🧣", "🧤", "🎿", "⛸️", "🏔️", "☕", "🧊", "🐧", "🛷", "🧦", "🦭", "🌨️", "🐻‍❄️", "🏒"],
+    words: ["hiver", "neige", "froid", "luge", "flocon", "glace", "bonnet", "écharpe", "gants", "moufles", "ski", "patins", "igloo", "pingouin", "manteau", "bonhomme", "glaçon", "sapin", "givre", "chocolat"],
   },
-  noel: {
-    name: "Noël",
-    emoji: "🎄",
-    bg: ["#f3d9d9", "#fffaf5"],
-    accent: "#a3222a",
-    decor: ["🎄", "⭐", "❄️", "🎁"],
-    icons: ["🎄", "🎅", "🎁", "⭐", "🔔", "🦌", "🕯️", "🍪", "🧦", "☃️", "🍬", "🎀", "🤶", "🛷", "🌟", "🧑‍🎄"],
-    words: ["noël", "sapin", "cadeau", "étoile", "guirlande", "boule", "traîneau", "renne", "lutin", "bougie", "cheminée", "chaussette", "hotte", "réveillon", "bûche", "houx", "décembre", "jouet", "ange", "papillote"],
-  },
-  halloween: {
-    name: "Halloween",
-    emoji: "🎃",
-    bg: ["#e7dcf0", "#fff6ea"],
-    accent: "#6a2c91",
-    decor: ["🦇", "🕸️", "🎃", "🌙"],
-    icons: ["🎃", "👻", "🦇", "🕷️", "🕸️", "🧙", "💀", "🍬", "🌙", "🐈‍⬛", "🧛", "🍭", "🔮", "🧹", "🧟", "🦉"],
-    words: ["halloween", "citrouille", "sorcière", "fantôme", "vampire", "araignée", "toile", "balai", "chaudron", "bonbon", "squelette", "momie", "monstre", "chat", "potion", "lune", "chapeau", "déguisement", "hibou", "peur"],
-  },
-  valentin: {
-    name: "Saint-Valentin",
-    emoji: "💘",
-    bg: ["#fbdde6", "#fff7fa"],
-    accent: "#c2185b",
-    decor: ["❤️", "💕", "🌹", "💗"],
-    icons: ["❤️", "💌", "🌹", "💘", "🍫", "💐", "💍", "🧸", "💝", "🕊️", "💋", "🎀", "🍓", "💞", "🦢", "🧁"],
-    words: ["amour", "cœur", "bisou", "câlin", "rose", "fleur", "cadeau", "lettre", "ami", "tendresse", "sourire", "chocolat", "bouquet", "février", "ensemble", "douceur", "bonheur", "famille", "merci", "partage"],
+  printemps: {
+    name: "Printemps",
+    emoji: "🌸",
+    bg: ["#e3f5e1", "#fdfbff"],
+    accent: "#2e7d4f",
+    decor: ["🌸", "🌱", "🦋", "🌼"],
+    icons: ["🌸", "🌷", "🐝", "🦋", "🌱", "🌈", "🐞", "🌼", "☔", "🐦", "🍓", "🌿", "🐌", "🪺", "🐛", "🌳"],
+    words: ["printemps", "fleur", "abeille", "papillon", "jardin", "oiseau", "nid", "arbre", "bourgeon", "coccinelle", "tulipe", "pluie", "arc-en-ciel", "herbe", "mars", "escargot", "graine", "soleil", "cerise", "marguerite"],
   },
   ete: {
     name: "Été",
@@ -68,14 +41,41 @@ window.THEMES = {
     icons: ["☀️", "🏖️", "🍉", "🍦", "🌴", "🐚", "🩴", "🕶️", "🏄", "🦀", "🍹", "⛱️", "🐠", "🌻", "🐬", "⛵"],
     words: ["été", "soleil", "plage", "mer", "sable", "vacances", "glace", "piscine", "chapeau", "lunettes", "coquillage", "château", "vague", "crabe", "bateau", "juillet", "août", "maillot", "pique-nique", "parasol"],
   },
-  printemps: {
-    name: "Printemps",
-    emoji: "🌸",
-    bg: ["#e3f5e1", "#fdfbff"],
-    accent: "#2e7d4f",
-    decor: ["🌸", "🌱", "🦋", "🌼"],
-    icons: ["🌸", "🌷", "🐝", "🦋", "🌱", "🌈", "🐞", "🌼", "☔", "🐦", "🍓", "🌿", "🐌", "🪺", "🐛", "🌳"],
-    words: ["printemps", "fleur", "abeille", "papillon", "jardin", "oiseau", "nid", "arbre", "bourgeon", "coccinelle", "tulipe", "pluie", "arc-en-ciel", "herbe", "mars", "escargot", "graine", "soleil", "cerise", "marguerite"],
+  halloween: {
+    name: "Halloween",
+    emoji: "🎃",
+    bg: ["#e7dcf0", "#fff6ea"],
+    accent: "#6a2c91",
+    decor: ["🦇", "🕸️", "🎃", "🌙"],
+    icons: ["🎃", "👻", "🦇", "🕷️", "🕸️", "🧙", "💀", "🍬", "🌙", "🐈‍⬛", "🧛", "🍭", "🔮", "🧹", "🧟", "🦉"],
+    words: ["halloween", "citrouille", "sorcière", "fantôme", "vampire", "araignée", "toile", "balai", "chaudron", "bonbon", "squelette", "momie", "monstre", "chat", "potion", "lune", "chapeau", "déguisement", "hibou", "peur"],
+  },
+  noel: {
+    name: "Noël",
+    emoji: "🎄",
+    bg: ["#f3d9d9", "#fffaf5"],
+    accent: "#a3222a",
+    decor: ["🎄", "⭐", "❄️", "🎁"],
+    icons: ["🎄", "🎅", "🎁", "⭐", "🔔", "🦌", "🕯️", "🍪", "🧦", "☃️", "🍬", "🎀", "🤶", "🛷", "🌟", "🧑‍🎄"],
+    words: ["noël", "sapin", "cadeau", "étoile", "guirlande", "boule", "traîneau", "renne", "lutin", "bougie", "cheminée", "chaussette", "hotte", "réveillon", "bûche", "houx", "décembre", "jouet", "ange", "papillote"],
+  },
+  valentin: {
+    name: "Saint-Valentin",
+    emoji: "💘",
+    bg: ["#fbdde6", "#fff7fa"],
+    accent: "#c2185b",
+    decor: ["❤️", "💕", "🌹", "💗"],
+    icons: ["❤️", "💌", "🌹", "💘", "🍫", "💐", "💍", "🧸", "💝", "🕊️", "💋", "🎀", "🍓", "💞", "🦢", "🧁"],
+    words: ["amour", "cœur", "bisou", "câlin", "rose", "fleur", "cadeau", "lettre", "ami", "tendresse", "sourire", "chocolat", "bouquet", "février", "ensemble", "douceur", "bonheur", "famille", "merci", "partage"],
+  },
+  paques: {
+    name: "Pâques",
+    emoji: "🐣",
+    bg: ["#e6f4d7", "#fffdf2"],
+    accent: "#5d8a2f",
+    decor: ["🌷", "🌼", "🥚", "🌸"],
+    icons: ["🐣", "🐰", "🥚", "🌷", "🐥", "🍫", "🧺", "🌼", "🐑", "🦋", "🌸", "🔔", "🥕", "🐤", "🐇", "🪺"],
+    words: ["pâques", "œuf", "lapin", "poussin", "cloche", "chocolat", "printemps", "panier", "poule", "agneau", "jonquille", "tulipe", "chasse", "nid", "carotte", "fleur", "jardin", "ruban", "cocotte", "avril"],
   },
   anniversaire: {
     name: "Anniversaire",
@@ -96,3 +96,10 @@ window.THEMES = {
     words: ["mer", "poisson", "baleine", "dauphin", "requin", "pieuvre", "crabe", "étoile", "méduse", "tortue", "coquillage", "vague", "bateau", "phare", "sable", "algue", "corail", "homard", "sirène", "plongée"],
   },
 };
+
+// Ordre d'affichage : saisons puis fêtes dans l'ordre de l'année scolaire (septembre → juin), puis le reste.
+window.THEME_GROUPS = [
+  { label: "Saisons", keys: ["automne", "hiver", "printemps", "ete"] },
+  { label: "Fêtes", keys: ["halloween", "noel", "valentin", "paques", "anniversaire"] },
+  { label: "Autres", keys: ["mer"] },
+];
