@@ -13,7 +13,7 @@ Ouvrir `index.html` dans un navigateur (aucune installation, aucun serveur néce
 2. Saisir un mot par ligne (accents ignorés, les espaces séparent les mots, `-` et `'` sont recopiés).
 3. « Imprimer (A4) » : choisir A4, marges « Aucune », cocher « Graphiques d'arrière-plan ».
 
-Options : titre de la fiche, ligne « Prénom », numérotation, page de correction ou non,
+Options : police adaptée aux enfants dys (Andika par défaut, OpenDyslexic, Lexend, Atkinson Hyperlegible), titre de la fiche, ligne « Prénom », numérotation, page de correction ou non,
 bouton « Mélanger » pour tirer d'autres dessins.
 
 ## Technique
@@ -23,3 +23,4 @@ HTML/CSS/JS vanilla, 100 % statique → hébergeable sur GitHub Pages, Netlify, 
 - `themes.js` : définition des thèmes (pictos emoji, couleurs, décor). Ajouter un thème = ajouter une entrée.
 - `app.js` : analyse des mots, attribution des dessins (aléatoire reproductible), rendu des pages.
 - `style.css` : mise en page en millimètres pour l'impression A4.
+- `fonts/` : polices hébergées localement (licence SIL OFL, voir `fonts/OFL.txt`), aucune dépendance externe.

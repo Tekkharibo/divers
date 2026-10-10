@@ -4,6 +4,14 @@
   const THEMES = window.THEMES;
   const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
   const STORAGE_KEY = "mot-secret:v0";
+  // Polices lisibles pour les enfants dys (fichiers dans fonts/).
+  const FONTS = {
+    andika: { name: "Andika (lettres d'école)", family: '"Andika", sans-serif' },
+    // OpenDyslexic est plus large : titre réduit pour tenir sur une ligne.
+    opendyslexic: { name: "OpenDyslexic", family: '"OpenDyslexic", sans-serif', titleScale: 0.72 },
+    lexend: { name: "Lexend", family: '"Lexend", sans-serif' },
+    atkinson: { name: "Atkinson Hyperlegible", family: '"Atkinson Hyperlegible", sans-serif' },
+  };
   // Positions des pictos décoratifs en fond de page (en % de la page) et taille en mm.
   // Nombre de lignes par page de correction.
   const ANSWERS_PER_PAGE = 10;
@@ -23,6 +31,7 @@
     themes: $("#themes"),
     words: $("#words"),
     title: $("#title"),
+    font: $("#font"),
     correction: $("#correction"),
     showName: $("#showName"),
     showNumber: $("#showNumber"),
@@ -36,6 +45,7 @@
     theme: "hiver",
     words: "hiver\nneige\nbonhomme de neige",
     title: "",
+    font: "andika",
     correction: "end",
     showName: false,
     showNumber: true,
@@ -49,6 +59,7 @@
       if (saved) Object.assign(state, saved);
     } catch (_) {}
     if (!THEMES[state.theme]) state.theme = "hiver";
+    if (!FONTS[state.font]) state.font = "andika";
     if (state.correction !== "none") state.correction = "end";
   }
   function save() {
@@ -141,6 +152,8 @@
     page.style.setProperty("--bg-top", theme.bg[0]);
     page.style.setProperty("--bg-bottom", theme.bg[1]);
     page.style.setProperty("--accent", theme.accent);
+    page.style.setProperty("--page-font", FONTS[state.font].family);
+    page.style.setProperty("--title-scale", FONTS[state.font].titleScale || 1);
 
     const decor = h("div", "decor");
     DECOR_SPOTS.forEach((spot, i) => {
@@ -291,12 +304,22 @@
   function bind() {
     els.words.value = state.words;
     els.title.value = state.title;
+    els.font.replaceChildren(
+      ...Object.entries(FONTS).map(([key, f]) => {
+        const o = h("option", "", f.name);
+        o.value = key;
+        o.style.fontFamily = f.family;
+        return o;
+      })
+    );
+    els.font.value = state.font;
     els.correction.value = state.correction;
     els.showName.checked = state.showName;
     els.showNumber.checked = state.showNumber;
 
     els.words.addEventListener("input", () => ((state.words = els.words.value), render()));
     els.title.addEventListener("input", () => ((state.title = els.title.value), render()));
+    els.font.addEventListener("change", () => ((state.font = els.font.value), render()));
     els.correction.addEventListener("change", () => ((state.correction = els.correction.value), render()));
     els.showName.addEventListener("change", () => ((state.showName = els.showName.checked), render()));
     els.showNumber.addEventListener("change", () => ((state.showNumber = els.showNumber.checked), render()));
