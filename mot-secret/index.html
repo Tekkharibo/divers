@@ -8,14 +8,14 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <aside class="panel">
+  <aside id="settings" class="panel">
     <h1>🔐 Mot secret</h1>
     <p class="hint">Chaque lettre du mot est cachée par un dessin dans l'alphabet. L'enfant retrouve les lettres manquantes pour décoder le mot.</p>
 
-    <label class="field">
-      <span>Thème</span>
-      <div id="themes" class="themes" role="radiogroup"></div>
-    </label>
+    <div class="field">
+      <span id="themes-label">Thème</span>
+      <div id="themes" class="themes" role="radiogroup" aria-labelledby="themes-label"></div>
+    </div>
 
     <label class="field">
       <span>Mots (un par ligne)</span>
@@ -27,10 +27,6 @@
       <input id="title" type="text" placeholder="Trouve le mot secret !" />
     </label>
 
-    <label class="field">
-      <span>Police (lisibilité)</span>
-      <select id="font"></select>
-    </label>
 
     <label class="field">
       <span>Correction</span>
@@ -43,17 +39,36 @@
     <label class="check"><input id="showName" type="checkbox" /> Ligne « Prénom »</label>
     <label class="check"><input id="showNumber" type="checkbox" checked /> Numéroter les fiches</label>
 
+    <fieldset class="group">
+      <legend>Lisibilité (dys, troubles visuels)</legend>
+      <label class="field">
+        <span>Police</span>
+        <select id="font"></select>
+      </label>
+      <label class="check"><input id="lowercase" type="checkbox" /> Lettres en minuscules</label>
+      <label class="check"><input id="bigText" type="checkbox" /> Texte agrandi</label>
+      <label class="check"><input id="spaced" type="checkbox" /> Cases espacées</label>
+      <label class="check"><input id="colorVowels" type="checkbox" /> Voyelles <b class="v">rouges</b>, consonnes <b class="c">bleues</b></label>
+    </fieldset>
+
     <div class="actions">
       <button id="shuffle" type="button" class="secondary">🔀 Mélanger les dessins</button>
-      <button id="print" type="button" class="primary">🖨️ Imprimer (A4)</button>
+      <button type="button" class="primary js-print">🖨️ Imprimer (A4)</button>
     </div>
     <p id="warnings" class="warnings"></p>
-    <p class="hint small">Astuce : dans la fenêtre d'impression, choisir A4, marges « Aucune » et cocher « Graphiques d'arrière-plan ».</p>
+    <p class="hint small">Astuce : dans la fenêtre d'impression, choisir A4, marges « Aucune » et cocher « Graphiques d'arrière-plan ».
+      Sur smartphone : « Imprimer » puis « Enregistrer en PDF » (Android) ou partager / imprimer le PDF (iPhone).</p>
   </aside>
 
-  <main class="preview-wrap">
+  <main id="apercu" class="preview-wrap">
     <div id="preview" class="preview"></div>
   </main>
+
+  <nav class="mobile-bar" aria-label="Navigation">
+    <a href="#settings">⚙️ Réglages</a>
+    <a href="#apercu">👀 Aperçu</a>
+    <button type="button" class="js-print">🖨️ Imprimer</button>
+  </nav>
 
   <script src="themes.js"></script>
   <script src="app.js"></script>

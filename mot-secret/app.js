@@ -12,9 +12,13 @@
     lexend: { name: "Lexend", family: '"Lexend", sans-serif' },
     atkinson: { name: "Atkinson Hyperlegible", family: '"Atkinson Hyperlegible", sans-serif' },
   };
-  // Positions des pictos décoratifs en fond de page (en % de la page) et taille en mm.
   // Nombre de lignes par page de correction.
   const ANSWERS_PER_PAGE = 10;
+  // En français, Y est classé avec les voyelles.
+  const VOWELS = "AEIOUY";
+  // Options de lisibilité (cases à cocher) → classe ajoutée sur chaque page.
+  const READABILITY = { lowercase: "is-lower", bigText: "is-big", spaced: "is-spaced", colorVowels: "is-colored" };
+  // Positions des pictos décoratifs en fond de page (en % de la page) et taille en mm.
   const DECOR_SPOTS = [
     { x: -4, y: -2, s: 46, r: -15 },
     { x: 84, y: 1, s: 34, r: 20 },
@@ -36,7 +40,6 @@
     showName: $("#showName"),
     showNumber: $("#showNumber"),
     shuffle: $("#shuffle"),
-    print: $("#print"),
     warnings: $("#warnings"),
     preview: $("#preview"),
   };
@@ -49,6 +52,10 @@
     correction: "end",
     showName: false,
     showNumber: true,
+    lowercase: false,
+    bigText: false,
+    spaced: false,
+    colorVowels: false,
     seed: 1,
   };
 
@@ -143,12 +150,14 @@
     if (html !== undefined) e.innerHTML = html;
     return e;
   };
+  const letterEl = (l) => h("span", "letter " + (VOWELS.includes(l) ? "vowel" : "consonant"), l);
   const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
   // Page A4 vide avec fond et décor du thème.
   function blankPage(cls) {
     const theme = THEMES[state.theme];
     const page = h("section", "page " + cls);
+    Object.entries(READABILITY).forEach(([opt, c]) => state[opt] && page.classList.add(c));
     page.style.setProperty("--bg-top", theme.bg[0]);
     page.style.setProperty("--bg-bottom", theme.bg[1]);
     page.style.setProperty("--accent", theme.accent);
@@ -188,7 +197,7 @@
       const icon = puzzle.iconOf[l];
       const cell = h("div", "alpha-cell");
       if (icon) cell.appendChild(h("span", "icon", icon));
-      else cell.textContent = l;
+      else cell.appendChild(letterEl(l));
       grid.appendChild(cell);
     });
     page.appendChild(grid);
@@ -197,7 +206,9 @@
     // Taille des cases calculée pour que le mot le plus long tienne sur une ligne (max 180 mm).
     // Si le texte passe sur plusieurs lignes, cases plus petites pour garder la fiche sur une page.
     const oneLineMm = puzzle.cellCount * 30 + (puzzle.groups.length - 1) * 15;
-    const cellMm = Math.min(oneLineMm > 180 ? 22 : 30, 180 / Math.max(puzzle.longest, 1));
+    const gapMm = state.spaced ? 1.5 : 0;
+    const longest = Math.max(puzzle.longest, 1);
+    const cellMm = Math.min(oneLineMm > 180 ? 22 : 30, (180 - (longest - 1) * gapMm) / longest);
     const strip = h("div", "word");
     strip.style.setProperty("--cell", `${cellMm}mm`);
     puzzle.groups.forEach((group) => {
@@ -239,11 +250,16 @@
         p.groups.forEach((group, gi) => {
           if (gi > 0) boxes.appendChild(h("div", "answer-box is-space"));
           group.forEach((t) =>
-            boxes.appendChild(h("div", "answer-box", t.kind === "letter" ? t.letter : esc(t.ch)))
+          {
+            const box = h("div", "answer-box", t.kind === "letter" ? "" : esc(t.ch));
+            if (t.kind === "letter") box.appendChild(letterEl(t.letter));
+            boxes.appendChild(box);
+          }
           );
         });
         // Police réduite si les cases deviennent étroites (longues expressions).
-        boxes.style.fontSize = `${Math.min(8, (150 / boxes.children.length) * 0.7)}mm`;
+        const scale = state.bigText ? 1.3 : 1;
+        boxes.style.fontSize = `${Math.min(8 * scale, (150 / boxes.children.length) * 0.7)}mm`;
         row.appendChild(boxes);
         list.appendChild(row);
       });
@@ -316,6 +332,11 @@
     els.correction.value = state.correction;
     els.showName.checked = state.showName;
     els.showNumber.checked = state.showNumber;
+    Object.keys(READABILITY).forEach((opt) => {
+      const input = $("#" + opt);
+      input.checked = state[opt];
+      input.addEventListener("change", () => ((state[opt] = input.checked), render()));
+    });
 
     els.words.addEventListener("input", () => ((state.words = els.words.value), render()));
     els.title.addEventListener("input", () => ((state.title = els.title.value), render()));
@@ -324,7 +345,7 @@
     els.showName.addEventListener("change", () => ((state.showName = els.showName.checked), render()));
     els.showNumber.addEventListener("change", () => ((state.showNumber = els.showNumber.checked), render()));
     els.shuffle.addEventListener("click", () => (state.seed++, render()));
-    els.print.addEventListener("click", () => window.print());
+    document.querySelectorAll(".js-print").forEach((b) => b.addEventListener("click", () => window.print()));
     window.addEventListener("resize", fitPreview);
     window.addEventListener("beforeprint", () => (els.preview.style.zoom = 1));
     window.addEventListener("afterprint", fitPreview);

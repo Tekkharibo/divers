@@ -13,7 +13,13 @@ Ouvrir `index.html` dans un navigateur (aucune installation, aucun serveur néce
 2. Saisir un mot par ligne (accents ignorés, les espaces séparent les mots, `-` et `'` sont recopiés).
 3. « Imprimer (A4) » : choisir A4, marges « Aucune », cocher « Graphiques d'arrière-plan ».
 
-Options : police adaptée aux enfants dys (Andika par défaut, OpenDyslexic, Lexend, Atkinson Hyperlegible), titre de la fiche, ligne « Prénom », numérotation, page de correction ou non,
+Lisibilité (enfants dys, troubles visuels) : police adaptée (Andika par défaut, OpenDyslexic, Lexend,
+Atkinson Hyperlegible), lettres en minuscules, texte agrandi, cases espacées, voyelles en rouge / consonnes en bleu.
+
+Utilisable sur smartphone : barre de navigation en bas (Réglages / Aperçu / Imprimer) ;
+« Imprimer » permet d'enregistrer un PDF A4.
+
+Autres options : titre de la fiche, ligne « Prénom », numérotation, page de correction ou non,
 bouton « Mélanger » pour tirer d'autres dessins.
 
 ## Technique
