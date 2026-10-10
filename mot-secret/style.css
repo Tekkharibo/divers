@@ -6,6 +6,7 @@
   --ui-border: #d5dbe4;
   --ui-primary: #2c6bed;
   --font: "Andika", "Segoe UI", system-ui, sans-serif;
+  --line: 0.4mm solid #222;
   --vowel: #d62828;
   --consonant: #1d4ed8;
   --emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
@@ -134,12 +135,16 @@ textarea { resize: vertical; text-transform: none; }
 .alpha-cell, .alpha-blank { display: flex; align-items: center; justify-content: center; }
 .alpha-cell {
   background: #fff;
-  border: 0.4mm solid #222;
-  margin: -0.2mm;
+  border-right: var(--line);
+  border-bottom: var(--line);
   font-size: 13mm;
   line-height: 1;
   position: relative;
 }
+/* Chaque trait n'est dessiné qu'une fois (pas de cases superposées) :
+   sinon, à l'aperçu réduit, Safari arrondit et une case masque la bordure de sa voisine. */
+.alpha-cell.edge-top { border-top: var(--line); }
+.alpha-cell.edge-left { border-left: var(--line); }
 .alpha-cell .icon { font-family: var(--emoji); font-size: 13mm; line-height: 1; }
 .alpha-blank { position: relative; }
 .badge {
@@ -168,8 +173,8 @@ textarea { resize: vertical; text-transform: none; }
 .word-col { width: var(--cell); display: flex; flex-direction: column; }
 .word-icon, .word-answer {
   height: calc(var(--cell) * 0.9);
-  border: 0.4mm solid #222;
-  margin: -0.2mm;
+  border-right: var(--line);
+  border-bottom: var(--line);
   background: #fff;
   display: flex;
   align-items: center;
@@ -178,6 +183,8 @@ textarea { resize: vertical; text-transform: none; }
 }
 .word-icon { font-family: var(--emoji); font-size: calc(var(--cell) * 0.6); }
 .word-answer { font-size: calc(var(--cell) * 0.6); }
+.word-icon { border-top: var(--line); }
+.word-col.edge-left > div { border-left: var(--line); }
 .word-col.is-char .word-icon, .word-col.is-char .word-answer { border-color: transparent; background: transparent; }
 
 /* ---------- Options de lisibilité ---------- */
@@ -190,11 +197,11 @@ textarea { resize: vertical; text-transform: none; }
 /* Cases séparées : moins d'encombrement visuel */
 /* cases un peu plus petites pour que l'espacement ne fasse pas déborder la page */
 .is-spaced .alpha { gap: 2.5mm; grid-template-columns: repeat(4, 40mm); grid-auto-rows: 20mm; }
-.is-spaced .alpha-cell, .is-spaced .word-icon, .is-spaced .word-answer { margin: 0; border-radius: 1.5mm; }
+.is-spaced .alpha-cell, .is-spaced .word-icon, .is-spaced .word-answer { border: var(--line); border-radius: 1.5mm; }
 .is-spaced .word-group { gap: 1.5mm; }
 .is-spaced .word-col { gap: 1.5mm; }
 .is-spaced .answer-boxes { gap: 1.5mm; }
-.is-spaced .answer-box { margin-left: 0; border-radius: 1.5mm; }
+.is-spaced .answer-box { border: var(--line); border-radius: 1.5mm; }
 .is-spaced .page-head h2 { letter-spacing: 0.04em; }
 
 /* Page de correction : une ligne par mot, même largeur pour toutes */
@@ -206,13 +213,13 @@ textarea { resize: vertical; text-transform: none; }
   flex: 1 1 0;
   min-width: 0;
   background: #fff;
-  border: 0.4mm solid #222;
-  margin-left: -0.4mm;
+  border: var(--line);
+  border-left: 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.answer-box:first-child { margin-left: 0; }
+.answer-box.edge-left { border-left: var(--line); }
 .answer-box.is-space { background: transparent; border-color: transparent; }
 
 /* ---------- Mobile ---------- */

@@ -195,7 +195,9 @@
         return;
       }
       const icon = puzzle.iconOf[l];
-      const cell = h("div", "alpha-cell");
+      // Bordures haut/gauche seulement sur les bords de la grille (Y n'a pas de voisin à gauche).
+      const edges = (i < 4 ? " edge-top" : "") + (i % 4 === 0 || l === "Y" ? " edge-left" : "");
+      const cell = h("div", "alpha-cell" + edges);
       if (icon) cell.appendChild(h("span", "icon", icon));
       else cell.appendChild(letterEl(l));
       grid.appendChild(cell);
@@ -213,8 +215,9 @@
     strip.style.setProperty("--cell", `${cellMm}mm`);
     puzzle.groups.forEach((group) => {
       const g = h("div", "word-group");
-      group.forEach((t) => {
-        const col = h("div", "word-col" + (t.kind === "char" ? " is-char" : ""));
+      group.forEach((t, ti) => {
+        const after = ti === 0 || group[ti - 1].kind === "char";
+        const col = h("div", "word-col" + (t.kind === "char" ? " is-char" : after ? " edge-left" : ""));
         if (t.kind === "letter") {
           // Lettre sans picto (thème à court de dessins) : donnée en indice.
           col.appendChild(h("div", "word-icon", puzzle.iconOf[t.letter] || t.letter));
@@ -251,7 +254,8 @@
           if (gi > 0) boxes.appendChild(h("div", "answer-box is-space"));
           group.forEach((t) =>
           {
-            const box = h("div", "answer-box", t.kind === "letter" ? "" : esc(t.ch));
+            const first = !boxes.lastChild || boxes.lastChild.classList.contains("is-space");
+            const box = h("div", "answer-box" + (first ? " edge-left" : ""), t.kind === "letter" ? "" : esc(t.ch));
             if (t.kind === "letter") box.appendChild(letterEl(t.letter));
             boxes.appendChild(box);
           }
