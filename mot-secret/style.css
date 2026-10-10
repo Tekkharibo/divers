@@ -1,0 +1,195 @@
+:root {
+  --ui-bg: #eef1f5;
+  --ui-panel: #ffffff;
+  --ui-text: #1d2433;
+  --ui-muted: #5d6779;
+  --ui-border: #d5dbe4;
+  --ui-primary: #2c6bed;
+  --font: "Fredoka", "Segoe UI", system-ui, sans-serif;
+  --emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ui-text);
+  background: var(--ui-bg);
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  min-height: 100vh;
+}
+
+/* ---------- Panneau de contrôle ---------- */
+.panel {
+  background: var(--ui-panel);
+  border-right: 1px solid var(--ui-border);
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+.panel h1 { margin: 0 0 6px; font-size: 26px; font-weight: 600; }
+.hint { color: var(--ui-muted); font-size: 14px; line-height: 1.4; margin: 0 0 16px; }
+.hint.small { font-size: 12.5px; margin-top: 12px; }
+
+.field { display: block; margin-bottom: 14px; }
+.field > span { display: block; font-weight: 500; margin-bottom: 6px; }
+textarea, input[type="text"], select {
+  width: 100%;
+  font: inherit;
+  font-size: 15px;
+  padding: 8px 10px;
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  background: #fff;
+  color: inherit;
+}
+textarea { resize: vertical; text-transform: none; }
+
+.themes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+.theme-btn {
+  font: inherit;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+}
+.theme-btn span { font-family: var(--emoji); font-size: 18px; }
+.theme-btn[aria-checked="true"] { border-color: var(--ui-primary); background: #e8f0ff; box-shadow: 0 0 0 1px var(--ui-primary) inset; }
+
+.check { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 15px; cursor: pointer; }
+
+.actions { display: grid; gap: 8px; margin-top: 16px; }
+.actions button {
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid var(--ui-border);
+  background: #fff;
+  color: inherit;
+}
+.actions .primary { background: var(--ui-primary); border-color: var(--ui-primary); color: #fff; }
+.warnings { color: #b3261e; font-size: 13.5px; margin: 10px 0 0; }
+.warnings:empty { display: none; }
+
+/* ---------- Aperçu ---------- */
+.preview-wrap { padding: 16px; overflow-x: hidden; }
+.preview { display: flex; flex-direction: column; align-items: center; gap: 10mm; padding: 6mm 0; }
+.empty { color: var(--ui-muted); font-size: 18px; }
+
+/* ---------- Page A4 ---------- */
+.page {
+  width: 210mm;
+  height: 297mm;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+  box-shadow: 0 4px 20px rgba(20, 30, 50, 0.18);
+  padding: 14mm 15mm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #111;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.decor { position: absolute; inset: 0; pointer-events: none; }
+.decor span { position: absolute; font-family: var(--emoji); line-height: 1; opacity: 0.28; }
+
+.page > *:not(.decor) { position: relative; }
+
+.page-head { text-align: center; margin-bottom: 7mm; min-height: 14mm; }
+.page-head h2 { margin: 0; font-size: 11mm; font-weight: 600; color: var(--accent); }
+.page-head h2 small { font-size: 6mm; font-weight: 400; color: #333; }
+.name-line { margin: 3mm 0 0; font-size: 5.5mm; }
+.name-line span { display: inline-block; width: 70mm; border-bottom: 0.4mm dotted #333; }
+
+/* Grille alphabet : 4 colonnes, comme le modèle */
+.alpha {
+  display: grid;
+  grid-template-columns: repeat(4, 42mm);
+  grid-auto-rows: 22mm;
+}
+.alpha-cell, .alpha-blank { display: flex; align-items: center; justify-content: center; }
+.alpha-cell {
+  background: #fff;
+  border: 0.4mm solid #222;
+  margin: -0.2mm;
+  font-size: 13mm;
+  line-height: 1;
+  position: relative;
+}
+.alpha-cell .icon { font-family: var(--emoji); font-size: 13mm; line-height: 1; }
+.alpha-blank { position: relative; }
+.badge {
+  width: 11mm;
+  height: 11mm;
+  border-radius: 50%;
+  background: #4a5a6e;
+  color: #fff;
+  font-size: 6mm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Correction : la lettre apparaît sous le dessin */
+.is-correction .alpha-cell.has-icon .icon { font-size: 10mm; }
+.is-correction .alpha-cell.has-icon { flex-direction: column; gap: 0.5mm; }
+.reveal { font-size: 6.5mm; font-weight: 600; color: var(--accent); }
+
+/* Bande du mot secret */
+.word {
+  margin-top: 14mm;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6mm calc(var(--cell) * 0.5);
+  max-width: 180mm;
+}
+.word-group { display: flex; }
+.word-col { width: var(--cell); display: flex; flex-direction: column; }
+.word-icon, .word-answer {
+  height: calc(var(--cell) * 0.9);
+  border: 0.4mm solid #222;
+  margin: -0.2mm;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.word-icon { font-family: var(--emoji); font-size: calc(var(--cell) * 0.6); }
+.word-answer { font-size: calc(var(--cell) * 0.6); font-weight: 500; }
+.is-correction .word-answer { color: var(--accent); font-weight: 600; }
+.word-col.is-char .word-icon, .word-col.is-char .word-answer { border-color: transparent; background: transparent; }
+
+/* ---------- Mobile ---------- */
+@media (max-width: 800px) {
+  body { grid-template-columns: 1fr; }
+  .panel { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--ui-border); }
+}
+
+/* ---------- Impression ---------- */
+@page { size: A4; margin: 0; }
+@media print {
+  body { display: block; background: none; }
+  .panel { display: none; }
+  .preview-wrap { padding: 0; }
+  .preview { display: block; padding: 0; zoom: 1 !important; }
+  .page { box-shadow: none; break-after: page; page-break-after: always; }
+  .page:last-child { break-after: auto; page-break-after: auto; }
+}

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mot secret</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <aside class="panel">
+    <h1>🔐 Mot secret</h1>
+    <p class="hint">Chaque lettre du mot est cachée par un dessin dans l'alphabet. L'enfant retrouve les lettres manquantes pour décoder le mot.</p>
+
+    <label class="field">
+      <span>Thème</span>
+      <div id="themes" class="themes" role="radiogroup"></div>
+    </label>
+
+    <label class="field">
+      <span>Mots (un par ligne)</span>
+      <textarea id="words" rows="7" spellcheck="false" placeholder="hiver&#10;neige&#10;bonhomme de neige"></textarea>
+    </label>
+
+    <label class="field">
+      <span>Titre de la fiche</span>
+      <input id="title" type="text" placeholder="Trouve le mot secret !" />
+    </label>
+
+    <label class="field">
+      <span>Correction</span>
+      <select id="correction">
+        <option value="after">Après chaque fiche</option>
+        <option value="end">Toutes à la fin</option>
+        <option value="none">Pas de correction</option>
+      </select>
+    </label>
+
+    <label class="check"><input id="showName" type="checkbox" /> Ligne « Prénom »</label>
+    <label class="check"><input id="showNumber" type="checkbox" checked /> Numéroter les fiches</label>
+
+    <div class="actions">
+      <button id="shuffle" type="button" class="secondary">🔀 Mélanger les dessins</button>
+      <button id="print" type="button" class="primary">🖨️ Imprimer (A4)</button>
+    </div>
+    <p id="warnings" class="warnings"></p>
+    <p class="hint small">Astuce : dans la fenêtre d'impression, choisir A4, marges « Aucune » et cocher « Graphiques d'arrière-plan ».</p>
+  </aside>
+
+  <main class="preview-wrap">
+    <div id="preview" class="preview"></div>
+  </main>
+
+  <script src="themes.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
