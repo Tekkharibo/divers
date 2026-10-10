@@ -70,6 +70,19 @@ textarea { resize: vertical; text-transform: none; }
 .theme-btn span { font-family: var(--emoji); font-size: 18px; }
 .theme-btn[aria-checked="true"] { border-color: var(--ui-primary); background: #e8f0ff; box-shadow: 0 0 0 1px var(--ui-primary) inset; }
 
+.theme-words {
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  width: 100%;
+  margin: -6px 0 14px;
+  padding: 9px 10px;
+  border: 1px dashed var(--ui-primary);
+  border-radius: 8px;
+  background: #f3f7ff;
+  color: var(--ui-primary);
+  cursor: pointer;
+}
 .check { display: flex; align-items: center; gap: 8px; min-height: 32px; margin-bottom: 4px; font-size: 15px; cursor: pointer; }
 .check input { width: 18px; height: 18px; flex: none; }
 .check .v { color: var(--vowel); }
@@ -230,7 +243,7 @@ html { scroll-behavior: smooth; }
 @media (max-width: 800px) {
   body { grid-template-columns: 1fr; padding-bottom: 64px; }
   .panel { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--ui-border); }
-  .theme-btn, .actions button { min-height: 44px; }
+  .theme-btn, .actions button, .theme-words { min-height: 44px; }
   .check { min-height: 40px; font-size: 16px; }
   .preview-wrap { padding: 12px 8px; scroll-margin-top: 0; }
   .preview { gap: 4mm; }

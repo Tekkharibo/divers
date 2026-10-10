@@ -40,6 +40,7 @@
     showName: $("#showName"),
     showNumber: $("#showNumber"),
     shuffle: $("#shuffle"),
+    themeWords: $("#themeWords"),
     warnings: $("#warnings"),
     preview: $("#preview"),
   };
@@ -332,6 +333,17 @@
   }
 
   // ---------- Interface ----------
+  // Remplace la liste par les 20 mots prédéfinis du thème, dans l'ordre (pas de tirage au sort).
+  function useThemeWords() {
+    const list = THEMES[state.theme].words.join("\n");
+    const current = els.words.value.trim();
+    // Confirmation seulement si l'utilisateur a saisi ses propres mots (pas une autre liste de thème).
+    const isThemeList = Object.values(THEMES).some((t) => t.words.join("\n") === current);
+    if (current && !isThemeList && !confirm("Remplacer les mots actuels par les 20 mots du thème ?")) return;
+    els.words.value = state.words = list;
+    render();
+  }
+
   function renderThemePicker() {
     els.themes.replaceChildren(
       ...Object.entries(THEMES).map(([key, t]) => {
@@ -376,6 +388,7 @@
     els.correction.addEventListener("change", () => ((state.correction = els.correction.value), render()));
     els.showName.addEventListener("change", () => ((state.showName = els.showName.checked), render()));
     els.showNumber.addEventListener("change", () => ((state.showNumber = els.showNumber.checked), render()));
+    els.themeWords.addEventListener("click", useThemeWords);
     els.shuffle.addEventListener("click", () => (state.seed++, render()));
     document.querySelectorAll(".js-print").forEach((b) => b.addEventListener("click", () => window.print()));
     window.addEventListener("resize", fitPreview);
