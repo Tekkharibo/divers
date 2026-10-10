@@ -2,8 +2,8 @@
 
 Générateur de fiches « mot secret » imprimables en A4 : l'alphabet est affiché dans une grille,
 les lettres du mot sont remplacées par des dessins du thème, et l'enfant décode le mot à l'aide
-de la bande de dessins en bas de page. Une page de correction (même mise en page, mêmes
-proportions) est générée pour chaque mot.
+de la bande de dessins en bas de page. Une page de correction récapitule tous les mots
+(une ligne numérotée par mot, toutes de même largeur).
 
 ## Utilisation
 
@@ -13,7 +13,7 @@ Ouvrir `index.html` dans un navigateur (aucune installation, aucun serveur néce
 2. Saisir un mot par ligne (accents ignorés, les espaces séparent les mots, `-` et `'` sont recopiés).
 3. « Imprimer (A4) » : choisir A4, marges « Aucune », cocher « Graphiques d'arrière-plan ».
 
-Options : titre de la fiche, ligne « Prénom », numérotation, correction après chaque fiche / à la fin / aucune,
+Options : titre de la fiche, ligne « Prénom », numérotation, page de correction ou non,
 bouton « Mélanger » pour tirer d'autres dessins.
 
 ## Technique

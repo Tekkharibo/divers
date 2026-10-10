@@ -5,6 +5,8 @@
   const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
   const STORAGE_KEY = "mot-secret:v0";
   // Positions des pictos décoratifs en fond de page (en % de la page) et taille en mm.
+  // Nombre de lignes par page de correction.
+  const ANSWERS_PER_PAGE = 10;
   const DECOR_SPOTS = [
     { x: -4, y: -2, s: 46, r: -15 },
     { x: 84, y: 1, s: 34, r: 20 },
@@ -34,7 +36,7 @@
     theme: "hiver",
     words: "hiver\nneige\nbonhomme de neige",
     title: "",
-    correction: "after",
+    correction: "end",
     showName: false,
     showNumber: true,
     seed: 1,
@@ -47,6 +49,7 @@
       if (saved) Object.assign(state, saved);
     } catch (_) {}
     if (!THEMES[state.theme]) state.theme = "hiver";
+    if (state.correction !== "none") state.correction = "end";
   }
   function save() {
     try {
@@ -131,9 +134,10 @@
   };
   const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
-  function renderPage(puzzle, isCorrection) {
+  // Page A4 vide avec fond et décor du thème.
+  function blankPage(cls) {
     const theme = THEMES[state.theme];
-    const page = h("section", "page" + (isCorrection ? " is-correction" : ""));
+    const page = h("section", "page " + cls);
     page.style.setProperty("--bg-top", theme.bg[0]);
     page.style.setProperty("--bg-bottom", theme.bg[1]);
     page.style.setProperty("--accent", theme.accent);
@@ -145,11 +149,16 @@
       decor.appendChild(d);
     });
     page.appendChild(decor);
+    return page;
+  }
+
+  function renderPage(puzzle) {
+    const page = blankPage("is-puzzle");
 
     const head = h("header", "page-head");
     const title = esc(state.title.trim() || "Trouve le mot secret !");
-    head.appendChild(h("h2", "", isCorrection ? `Correction <small>— fiche ${puzzle.index}</small>` : title));
-    if (state.showName && !isCorrection) head.appendChild(h("p", "name-line", "Prénom : <span></span>"));
+    head.appendChild(h("h2", "", title));
+    if (state.showName) head.appendChild(h("p", "name-line", "Prénom : <span></span>"));
     page.appendChild(head);
 
     // Grille alphabet : 6 lignes de 4 (A→X) puis Y, Z centrés.
@@ -164,13 +173,9 @@
         return;
       }
       const icon = puzzle.iconOf[l];
-      const cell = h("div", "alpha-cell" + (icon ? " has-icon" : ""));
-      if (icon) {
-        cell.appendChild(h("span", "icon", icon));
-        if (isCorrection) cell.appendChild(h("span", "reveal", l));
-      } else {
-        cell.textContent = l;
-      }
+      const cell = h("div", "alpha-cell");
+      if (icon) cell.appendChild(h("span", "icon", icon));
+      else cell.textContent = l;
       grid.appendChild(cell);
     });
     page.appendChild(grid);
@@ -189,7 +194,7 @@
         if (t.kind === "letter") {
           // Lettre sans picto (thème à court de dessins) : donnée en indice.
           col.appendChild(h("div", "word-icon", puzzle.iconOf[t.letter] || t.letter));
-          col.appendChild(h("div", "word-answer", isCorrection ? t.letter : ""));
+          col.appendChild(h("div", "word-answer"));
         } else {
           col.appendChild(h("div", "word-icon"));
           col.appendChild(h("div", "word-answer", esc(t.ch)));
@@ -201,6 +206,38 @@
     page.appendChild(strip);
 
     return page;
+  }
+
+  // Correction : une ligne par mot, toutes de même largeur ; les cases se partagent la largeur
+  // (un mot court a des cases larges, un mot long des cases étroites).
+  function renderAnswerPages(puzzles) {
+    const pages = [];
+    for (let start = 0; start < puzzles.length; start += ANSWERS_PER_PAGE) {
+      const page = blankPage("is-answers");
+      const head = h("header", "page-head");
+      head.appendChild(h("h2", "", "Correction"));
+      page.appendChild(head);
+
+      const list = h("div", "answers");
+      puzzles.slice(start, start + ANSWERS_PER_PAGE).forEach((p) => {
+        const row = h("div", "answer-row");
+        row.appendChild(h("span", "badge", String(p.index)));
+        const boxes = h("div", "answer-boxes");
+        p.groups.forEach((group, gi) => {
+          if (gi > 0) boxes.appendChild(h("div", "answer-box is-space"));
+          group.forEach((t) =>
+            boxes.appendChild(h("div", "answer-box", t.kind === "letter" ? t.letter : esc(t.ch)))
+          );
+        });
+        // Police réduite si les cases deviennent étroites (longues expressions).
+        boxes.style.fontSize = `${Math.min(8, (150 / boxes.children.length) * 0.7)}mm`;
+        row.appendChild(boxes);
+        list.appendChild(row);
+      });
+      page.appendChild(list);
+      pages.push(page);
+    }
+    return pages;
   }
 
   function render() {
@@ -217,11 +254,8 @@
     els.warnings.innerHTML = warnings.join("<br>");
 
     const frag = document.createDocumentFragment();
-    puzzles.forEach((p) => {
-      frag.appendChild(renderPage(p, false));
-      if (state.correction === "after") frag.appendChild(renderPage(p, true));
-    });
-    if (state.correction === "end") puzzles.forEach((p) => frag.appendChild(renderPage(p, true)));
+    puzzles.forEach((p) => frag.appendChild(renderPage(p)));
+    if (state.correction === "end") renderAnswerPages(puzzles).forEach((pg) => frag.appendChild(pg));
     if (!puzzles.length) frag.appendChild(h("p", "empty", "Ajoute au moins un mot pour générer une fiche."));
 
     els.preview.replaceChildren(frag);

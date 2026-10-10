@@ -146,10 +146,6 @@ textarea { resize: vertical; text-transform: none; }
   justify-content: center;
 }
 
-/* Correction : la lettre apparaît sous le dessin */
-.is-correction .alpha-cell.has-icon .icon { font-size: 10mm; }
-.is-correction .alpha-cell.has-icon { flex-direction: column; gap: 0.5mm; }
-.reveal { font-size: 6.5mm; font-weight: 600; color: var(--accent); }
 
 /* Bande du mot secret */
 .word {
@@ -174,8 +170,25 @@ textarea { resize: vertical; text-transform: none; }
 }
 .word-icon { font-family: var(--emoji); font-size: calc(var(--cell) * 0.6); }
 .word-answer { font-size: calc(var(--cell) * 0.6); font-weight: 500; }
-.is-correction .word-answer { color: var(--accent); font-weight: 600; }
 .word-col.is-char .word-icon, .word-col.is-char .word-answer { border-color: transparent; background: transparent; }
+
+/* Page de correction : une ligne par mot, même largeur pour toutes */
+.answers { display: flex; flex-direction: column; gap: 8mm; width: 170mm; }
+.answer-row { display: flex; align-items: center; gap: 6mm; }
+.answer-row .badge { flex: none; }
+.answer-boxes { flex: 1; display: flex; height: 16mm; }
+.answer-box {
+  flex: 1 1 0;
+  min-width: 0;
+  background: #fff;
+  border: 0.4mm solid #222;
+  margin-left: -0.4mm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.answer-box:first-child { margin-left: 0; }
+.answer-box.is-space { background: transparent; border-color: transparent; }
 
 /* ---------- Mobile ---------- */
 @media (max-width: 800px) {
