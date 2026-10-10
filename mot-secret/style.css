@@ -118,7 +118,7 @@ textarea { resize: vertical; text-transform: none; }
 .decor { position: absolute; inset: 0; pointer-events: none; }
 .decor span { position: absolute; font-family: var(--emoji); line-height: 1; opacity: 0.28; }
 
-.page > *:not(.decor) { position: relative; }
+.page > *:not(.decor) { position: relative; flex-shrink: 0; } /* jamais écrasé : fitStrips() mesure le vrai débordement */
 
 .page-head { text-align: center; margin-bottom: 7mm; min-height: 14mm; }
 .page-head h2 { margin: 0; font-size: calc(11mm * var(--title-scale, 1)); white-space: nowrap; font-weight: 700; color: var(--accent); }
@@ -169,7 +169,8 @@ textarea { resize: vertical; text-transform: none; }
   gap: 6mm calc(var(--cell) * 0.5);
   max-width: 180mm;
 }
-.word-group { display: flex; }
+.word-group { display: flex; flex-wrap: wrap; justify-content: center; row-gap: 6mm; }
+.word-seg { display: flex; }
 .word-col { width: var(--cell); display: flex; flex-direction: column; }
 .word-icon, .word-answer {
   height: calc(var(--cell) * 0.9);
@@ -198,7 +199,8 @@ textarea { resize: vertical; text-transform: none; }
 /* cases un peu plus petites pour que l'espacement ne fasse pas déborder la page */
 .is-spaced .alpha { gap: 2.5mm; grid-template-columns: repeat(4, 40mm); grid-auto-rows: 20mm; }
 .is-spaced .alpha-cell, .is-spaced .word-icon, .is-spaced .word-answer { border: var(--line); border-radius: 1.5mm; }
-.is-spaced .word-group { gap: 1.5mm; }
+.is-spaced .word-group { column-gap: 1.5mm; }
+.is-spaced .word-seg { gap: 1.5mm; }
 .is-spaced .word-col { gap: 1.5mm; }
 .is-spaced .answer-boxes { gap: 1.5mm; }
 .is-spaced .answer-box { border: var(--line); border-radius: 1.5mm; }

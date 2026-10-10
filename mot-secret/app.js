@@ -120,6 +120,17 @@
       );
   }
 
+  // Découpe un mot après chaque tiret / apostrophe : « arc-en-ciel » → « arc- », « en- », « ciel »,
+  // pour pouvoir passer à la ligne à ces endroits et garder de grandes cases.
+  function segments(group) {
+    const out = [[]];
+    group.forEach((t, i) => {
+      out[out.length - 1].push(t);
+      if (t.kind === "char" && i < group.length - 1) out.push([]);
+    });
+    return out;
+  }
+
   function buildPuzzle(raw, index) {
     const theme = THEMES[state.theme];
     const groups = parse(raw);
@@ -138,8 +149,7 @@
       groups,
       iconOf,
       tooMany: unique.length > theme.icons.length,
-      cellCount: groups.reduce((n, g) => n + g.length, 0),
-      longest: Math.max(...groups.map((g) => g.length)),
+      longest: Math.max(...groups.flatMap((g) => segments(g).map((s) => s.length))),
     };
   }
 
@@ -205,28 +215,31 @@
     page.appendChild(grid);
 
     // Bande du mot : pictos en haut, cases à remplir en bas.
-    // Taille des cases calculée pour que le mot le plus long tienne sur une ligne (max 180 mm).
-    // Si le texte passe sur plusieurs lignes, cases plus petites pour garder la fiche sur une page.
-    const oneLineMm = puzzle.cellCount * 30 + (puzzle.groups.length - 1) * 15;
+    // Taille de départ : le plus long morceau tient sur une ligne (max 180 mm).
+    // fitStrips() la réduit ensuite si la bande dépasse le bas de la page.
     const gapMm = state.spaced ? 1.5 : 0;
     const longest = Math.max(puzzle.longest, 1);
-    const cellMm = Math.min(oneLineMm > 180 ? 22 : 30, (180 - (longest - 1) * gapMm) / longest);
+    const cellMm = Math.min(30, (180 - (longest - 1) * gapMm) / longest);
     const strip = h("div", "word");
+    strip.dataset.cell = cellMm;
     strip.style.setProperty("--cell", `${cellMm}mm`);
     puzzle.groups.forEach((group) => {
       const g = h("div", "word-group");
-      group.forEach((t, ti) => {
-        const after = ti === 0 || group[ti - 1].kind === "char";
-        const col = h("div", "word-col" + (t.kind === "char" ? " is-char" : after ? " edge-left" : ""));
-        if (t.kind === "letter") {
-          // Lettre sans picto (thème à court de dessins) : donnée en indice.
-          col.appendChild(h("div", "word-icon", puzzle.iconOf[t.letter] || t.letter));
-          col.appendChild(h("div", "word-answer"));
-        } else {
-          col.appendChild(h("div", "word-icon"));
-          col.appendChild(h("div", "word-answer", esc(t.ch)));
-        }
-        g.appendChild(col);
+      segments(group).forEach((seg) => {
+        const s = h("div", "word-seg");
+        seg.forEach((t, ti) => {
+          const col = h("div", "word-col" + (t.kind === "char" ? " is-char" : ti === 0 ? " edge-left" : ""));
+          if (t.kind === "letter") {
+            // Lettre sans picto (thème à court de dessins) : donnée en indice.
+            col.appendChild(h("div", "word-icon", puzzle.iconOf[t.letter] || t.letter));
+            col.appendChild(h("div", "word-answer"));
+          } else {
+            col.appendChild(h("div", "word-icon"));
+            col.appendChild(h("div", "word-answer", esc(t.ch)));
+          }
+          s.appendChild(col);
+        });
+        g.appendChild(s);
       });
       strip.appendChild(g);
     });
@@ -293,7 +306,22 @@
 
     els.preview.replaceChildren(frag);
     fitPreview();
+    fitStrips();
     save();
+  }
+
+  // Réduit les cases de la bande du mot (par pas de 1 mm) tant qu'elle dépasse le bas de la page.
+  function fitStrips() {
+    els.preview.querySelectorAll(".page.is-puzzle").forEach((page) => {
+      const strip = page.querySelector(".word");
+      const pr = page.getBoundingClientRect();
+      const limit = pr.bottom - (12 * pr.height) / 297; // 12 mm de marge basse
+      let cell = Number(strip.dataset.cell);
+      while (cell > 10 && strip.getBoundingClientRect().bottom > limit) {
+        cell -= 1;
+        strip.style.setProperty("--cell", `${cell}mm`);
+      }
+    });
   }
 
   // Mise à l'échelle de l'aperçu à l'écran (l'impression reste à 100 %).
@@ -359,4 +387,6 @@
   renderThemePicker();
   bind();
   render();
+  // La hauteur du titre dépend de la police : réajuste une fois les polices chargées.
+  if (document.fonts) document.fonts.ready.then(fitStrips);
 })();
