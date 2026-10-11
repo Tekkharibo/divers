@@ -226,7 +226,6 @@ textarea { resize: vertical; text-transform: none; }
 /* Noir et blanc : fond blanc, sans décor, dessins en gris, titres et lettres en noir */
 .page.is-bw { background: #fff; --accent: #111 !important; }
 .is-bw .decor { display: none; }
-.is-bw .pic-native { filter: grayscale(1) contrast(1.1); }
 .is-bw .vowel, .is-bw .consonant { color: #111; }
 .is-bw .badge { background: #fff; color: #111; border: 0.4mm solid #111; }
 

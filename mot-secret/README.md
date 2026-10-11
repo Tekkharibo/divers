@@ -32,7 +32,7 @@ HTML/CSS/JS vanilla, 100 % statique → hébergeable sur GitHub Pages, Netlify, 
 - `style.css` : mise en page en millimètres pour l'impression A4.
 - `vendor/` : jsPDF et html2canvas (MIT, voir `vendor/LICENSES.txt`), chargés seulement au premier export PDF.
 - `emoji/` : dessins [Fluent Emoji](https://github.com/microsoft/fluentui-emoji) de Microsoft (licence MIT, voir `emoji/LICENSE.txt`),
-  en SVG : `flat/` (par défaut), `color/` (détaillé) et `hc/` (High Contrast, utilisé en noir et blanc).
+  en SVG : `flat/` et `hc/` (High Contrast, utilisé en noir et blanc).
   Après avoir ajouté des emojis dans `themes.js` : `node tools/copy-fluent-emoji.js /chemin/vers/clone/fluentui-emoji`.
 - `fonts/` : polices hébergées localement (licence SIL OFL, voir `fonts/OFL.txt`), aucune dépendance externe.
 
