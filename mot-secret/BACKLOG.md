@@ -119,4 +119,4 @@ Un mode où l'enfant tape les lettres directement dans les cases au lieu d'impri
 2. Partage par lien (n° 2) : sert de base au mode vidéoprojecteur, au contact et au mode en ligne.
 3. Mode vidéoprojecteur (n° 1).
 4. Fond personnalisé (n° 4).
-6. Mode en ligne (n° 5), si le besoin se confirme.
+5. Mode en ligne (n° 5), si le besoin se confirme.
