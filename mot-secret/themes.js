@@ -107,7 +107,7 @@ window.THEME_GROUPS = [
 
 // Mode « imagier » : chaque lettre devient un dessin dont le nom commence par cette lettre.
 // Mots choisis pour que le premier son corresponde à la lettre (cochon plutôt que chat).
-// X : pas encore de dessin, la lettre reste écrite.
+// « :nom: » = dessin maison (emoji/{flat,hc}/nom.svg) quand l'emoji n'existe pas (pas d'emoji xylophone).
 window.PICTURE_ALPHABET = {
   A: ["🐝", "abeille"],
   B: ["🐳", "baleine"],
@@ -132,6 +132,7 @@ window.PICTURE_ALPHABET = {
   U: ["🏭", "usine"],
   V: ["🐄", "vache"],
   W: ["🚃", "wagon"],
+  X: [":xylophone:", "xylophone"],
   Y: ["🪀", "yoyo"],
   Z: ["🦓", "zèbre"],
 };

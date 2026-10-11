@@ -33,7 +33,8 @@ for (const dir of fs.readdirSync(assets)) {
 
 const used = new Set();
 for (const t of Object.values(window.THEMES)) [...t.icons, ...t.decor].forEach((e) => used.add(e));
-for (const [e] of Object.values(window.PICTURE_ALPHABET || {})) used.add(e);
+// « :nom: » = dessin maison déjà présent dans emoji/, ignoré ici.
+for (const [e] of Object.values(window.PICTURE_ALPHABET || {})) if (!/^:.+:$/.test(e)) used.add(e);
 
 const styles = { flat: "Flat", hc: "High Contrast" };
 const missing = [];

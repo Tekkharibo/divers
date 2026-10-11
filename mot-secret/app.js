@@ -206,7 +206,8 @@
     img.className = "pic";
     img.alt = "";
     img.draggable = false;
-    img.src = `emoji/${state.blackWhite ? "hc" : "flat"}/${emojiFile(e)}.svg${VERSION}`;
+    const file = /^:.+:$/.test(e) ? e.slice(1, -1) : emojiFile(e); // « :nom: » = dessin maison
+    img.src = `emoji/${state.blackWhite ? "hc" : "flat"}/${file}.svg${VERSION}`;
     return img;
   }
   const letterEl = (l) => h("span", "letter " + (VOWELS.includes(l) ? "vowel" : "consonant"), l);
@@ -258,7 +259,7 @@
 
   // Grille alphabet : 6 lignes de 4 (A→X) puis Y, Z centrés.
   // Mot secret : les lettres du mot sont remplacées par leur dessin.
-  // Imagier : chaque case montre son dessin et sa lettre (X : lettre seule, pas encore de dessin).
+  // Imagier : chaque case montre son dessin et sa lettre.
   function renderGrid(puzzle, imagier) {
     const grid = h("div", "alpha" + (imagier ? " is-key" : ""));
     const cells = ALPHABET.slice(0, 24);
@@ -303,7 +304,7 @@
         seg.forEach((t, ti) => {
           const col = h("div", "word-col" + (t.kind === "char" ? " is-char" : ti === 0 ? " edge-left" : ""));
           if (t.kind === "letter") {
-            // Lettre sans dessin (thème à court de dessins, ou X en imagier) : donnée en indice.
+            // Lettre sans dessin (thème à court de dessins) : donnée en indice.
             const icon = puzzle.iconOf[t.letter];
             col.appendChild(h("div", "word-icon", icon ? undefined : t.letter)).append(...(icon ? [pic(icon)] : []));
             col.appendChild(h("div", "word-answer"));

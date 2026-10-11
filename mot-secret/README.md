@@ -37,6 +37,7 @@ HTML/CSS/JS vanilla, 100 % statique → hébergeable sur GitHub Pages, Netlify, 
 - `vendor/` : jsPDF et html2canvas (MIT, voir `vendor/LICENSES.txt`), chargés seulement au premier export PDF.
 - `emoji/` : dessins [Fluent Emoji](https://github.com/microsoft/fluentui-emoji) de Microsoft (licence MIT, voir `emoji/LICENSE.txt`),
   en SVG : `flat/` et `hc/` (High Contrast, utilisé en noir et blanc).
+  `xylophone.svg` (X de l'imagier) est un dessin maison, aucun emoji xylophone n'existant.
   Après avoir ajouté des emojis dans `themes.js` : `node tools/copy-fluent-emoji.js /chemin/vers/clone/fluentui-emoji`.
 - `fonts/` : polices hébergées localement (licence SIL OFL, voir `fonts/OFL.txt`), aucune dépendance externe.
 

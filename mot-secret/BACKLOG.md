@@ -64,7 +64,7 @@ donc « BOL » s'écrit 🐳 🍊 🦁 (baleine, orange, lion). L'enfant retrouv
   Q (quilles), U (usine), W (wagon), X (aucun emoji « xylophone » : à remplacer par un dessin maison ou
   laisser la lettre visible), Y (yoyo).
   → Fait avec : C cochon, H hibou, I île, J jus, K koala, O orange, Q quilles, U usine, W wagon, Y yoyo.
-  **X reste écrit en lettre pour l'instant** (dessin à trouver).
+  X : xylophone, dessin maison au style Fluent (`emoji/flat|hc/xylophone.svg`).
 - Vérifier que chaque dessin existe dans Fluent Emoji (`tools/copy-fluent-emoji.js` signale les manquants).
 - La correction reste la même : le mot écrit en lettres.
 
