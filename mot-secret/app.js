@@ -323,7 +323,7 @@
     els.preview.querySelectorAll(".page.is-puzzle").forEach((page) => {
       const strip = page.querySelector(".word");
       const pr = page.getBoundingClientRect();
-      const limit = pr.bottom - (12 * pr.height) / 297; // 12 mm de marge basse
+      const limit = pr.bottom - (12 * pr.width) / 210; // 12 mm de marge basse (largeur = 210 mm)
       let cell = Number(strip.dataset.cell);
       while (cell > 10 && strip.getBoundingClientRect().bottom > limit) {
         cell -= 1;

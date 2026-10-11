@@ -289,6 +289,8 @@ html { scroll-behavior: smooth; }
   .preview { display: block; padding: 0; zoom: 1 !important; }
   .page { box-shadow: none; break-after: page; page-break-after: always; }
   .page:last-child { break-after: auto; page-break-after: auto; }
-  /* WebKit : zone imprimable réelle ≈ 182 × 249 mm → fiche à 80 % (168 × 238 mm), centrée */
-  .print-safe .page { zoom: 0.8; margin: 0 auto; }
 }
+/* WebKit (Safari, iPhone, iPad) ignore « @page { margin: 0 } » et « zoom » à l'impression : il réduit
+   la page à la largeur imprimable (≈ 182/210). Une fiche de 297 mm dépasserait alors la hauteur
+   imprimable (≈ 249 mm) et déborderait sur une page blanche → fiche moins haute. */
+.print-safe .page { height: 280mm; }
