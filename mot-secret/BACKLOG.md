@@ -69,6 +69,22 @@ donc « BOL » s'écrit 🐳 🍊 🦁 (baleine, orange, lion). L'enfant retrouv
 - Vérifier que chaque dessin existe dans Fluent Emoji (`tools/copy-fluent-emoji.js` signale les manquants).
 - La correction reste la même : le mot écrit en lettres.
 
+### 7. Lien Ko-fi pour les dons — S
+
+- Lien « ☕ Soutenir le projet » vers la page Ko-fi, en bas du panneau de réglages et dans le README.
+- Simple lien qui s'ouvre dans un nouvel onglet, **sans le widget Ko-fi** : pas de script externe ni de
+  traceur (important pour un usage en classe, RGPD), et le site reste sans dépendance externe.
+- Jamais imprimé sur les fiches ni dans le PDF.
+- **Décision à prendre** : l'identifiant Ko-fi (`https://ko-fi.com/…`).
+
+### 8. Licence MIT — S
+
+- Fichier `LICENSE` (texte MIT standard) à la racine de `mot-secret/`, mention dans le README.
+- Compatible avec ce qui est inclus : Fluent Emoji (MIT), jsPDF et html2canvas (MIT) gardent leurs fichiers
+  de licence ; les polices restent sous leur licence d'origine SIL OFL (`fonts/OFL.txt`), elles ne passent pas en MIT.
+- Le dessin du xylophone (original) est couvert par la licence MIT du projet.
+- **Décision à prendre** : le nom du titulaire des droits (« Copyright (c) 2026 … »).
+
 ## En attente
 
 ### 5. Compléter une fiche à l'ordinateur ou à la tablette — L
@@ -99,7 +115,7 @@ Un mode où l'enfant tape les lettres directement dans les cases au lieu d'impri
 
 ## Ordre suggéré
 
-1. Bouton contact (n° 3) : rapide et utile pour recevoir des retours.
+1. Licence MIT (n° 8), lien Ko-fi (n° 7) et bouton contact (n° 3) : rapides, à faire ensemble.
 2. Partage par lien (n° 2) : sert de base au mode vidéoprojecteur, au contact et au mode en ligne.
 3. Mode vidéoprojecteur (n° 1).
 4. Fond personnalisé (n° 4).
