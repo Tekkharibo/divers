@@ -3,7 +3,8 @@
 // - decor : pictos décoratifs en fond de page
 // - bg    : dégradé de fond [haut, bas]
 // - accent: couleur des titres / de la correction
-// - words : 20 mots prédéfinis du thème (insérés dans cet ordre, sans tirage au sort)
+// - words : 20 mots prédéfinis du thème (insérés dans cet ordre, sans tirage au sort) ;
+//           pour les saisons, les 3 mois de la saison sont à la fin
 window.THEMES = {
   automne: {
     name: "Automne",
@@ -12,7 +13,7 @@ window.THEMES = {
     accent: "#9a4a12",
     decor: ["🍂", "🍁", "🍂", "🍄"],
     icons: ["🍂", "🍁", "🍄", "🌰", "🦔", "🍎", "🐿️", "☔", "🍇", "🥧", "🌽", "🦉", "🧺", "🍐", "🎃", "🌂"],
-    words: ["automne", "feuille", "pluie", "champignon", "châtaigne", "marron", "hérisson", "écureuil", "citrouille", "pomme", "raisin", "parapluie", "bottes", "vent", "noisette", "gland", "brouillard", "octobre", "novembre", "récolte"],
+    words: ["automne", "feuille", "pluie", "champignon", "châtaigne", "marron", "hérisson", "écureuil", "citrouille", "pomme", "raisin", "parapluie", "bottes", "vent", "noisette", "gland", "brouillard", "septembre", "octobre", "novembre"],
   },
   hiver: {
     name: "Hiver",
@@ -21,7 +22,7 @@ window.THEMES = {
     accent: "#2c4f7c",
     decor: ["❄️", "🌨️", "❄️", "⛄"],
     icons: ["⛄", "❄️", "🧣", "🧤", "🎿", "⛸️", "🏔️", "☕", "🧊", "🐧", "🛷", "🧦", "🦭", "🌨️", "🐻‍❄️", "🏒"],
-    words: ["hiver", "neige", "froid", "luge", "flocon", "glace", "bonnet", "écharpe", "gants", "moufles", "ski", "patins", "igloo", "pingouin", "manteau", "bonhomme", "glaçon", "sapin", "givre", "chocolat"],
+    words: ["hiver", "neige", "froid", "luge", "flocon", "glace", "bonnet", "écharpe", "gants", "ski", "patins", "igloo", "pingouin", "manteau", "bonhomme", "sapin", "chocolat", "décembre", "janvier", "février"],
   },
   printemps: {
     name: "Printemps",
@@ -30,7 +31,7 @@ window.THEMES = {
     accent: "#2e7d4f",
     decor: ["🌸", "🌱", "🦋", "🌼"],
     icons: ["🌸", "🌷", "🐝", "🦋", "🌱", "🌈", "🐞", "🌼", "☔", "🐦", "🍓", "🌿", "🐌", "🪺", "🐛", "🌳"],
-    words: ["printemps", "fleur", "abeille", "papillon", "jardin", "oiseau", "nid", "arbre", "bourgeon", "coccinelle", "tulipe", "pluie", "arc-en-ciel", "herbe", "mars", "escargot", "graine", "soleil", "cerise", "marguerite"],
+    words: ["printemps", "fleur", "abeille", "papillon", "jardin", "oiseau", "nid", "arbre", "bourgeon", "coccinelle", "tulipe", "pluie", "arc-en-ciel", "escargot", "soleil", "cerise", "marguerite", "mars", "avril", "mai"],
   },
   ete: {
     name: "Été",
@@ -39,7 +40,7 @@ window.THEMES = {
     accent: "#0a7ea4",
     decor: ["☀️", "🌴", "🐚", "🌊"],
     icons: ["☀️", "🏖️", "🍉", "🍦", "🌴", "🐚", "🩴", "🕶️", "🏄", "🦀", "🍹", "⛱️", "🐠", "🌻", "🐬", "⛵"],
-    words: ["été", "soleil", "plage", "mer", "sable", "vacances", "glace", "piscine", "chapeau", "lunettes", "coquillage", "château", "vague", "crabe", "bateau", "juillet", "août", "maillot", "pique-nique", "parasol"],
+    words: ["été", "soleil", "plage", "mer", "sable", "vacances", "glace", "piscine", "chapeau", "lunettes", "coquillage", "château", "vague", "crabe", "bateau", "maillot", "pique-nique", "juin", "juillet", "août"],
   },
   halloween: {
     name: "Halloween",
