@@ -65,13 +65,13 @@ Un mode où l'enfant tape les lettres directement dans les cases au lieu d'impri
 
 | Idée | Taille | Intérêt |
 |---|---|---|
-| Mode noir et blanc / économie d'encre | S | Écoles : imprimantes noir et blanc, coût de l'encre. Va avec le n° 4. |
+| ~~Mode noir et blanc / économie d'encre~~ ✅ fait | S | Case « Noir et blanc » : fond blanc, sans décor, dessins en gris. |
 | 2 fiches par page A4 | M | Divise le papier par deux pour les mots courts. |
 | Niveaux de difficulté | M | Facile : quelques lettres déjà écrites. Difficile : dessins pièges sur des lettres absentes du mot. |
 | Nouveaux thèmes | S chacun | Rentrée, ferme, espace, animaux, carnaval, galette des rois. |
 | Application installable hors ligne (PWA) | M | Icône sur le téléphone ou l'ordinateur de classe, marche sans réseau. |
 | Dessins SVG maison | L | Rendu identique sur tous les appareils (les emojis varient selon le système). |
-| Export PDF direct | M | Un seul bouton, sans passer par la fenêtre d'impression. |
+| ~~Export PDF direct~~ ✅ fait | M | Bouton « Télécharger le PDF » (jsPDF + html2canvas, dans le navigateur). |
 | Tag `v1.0` sur `main` | S | Retrouver facilement la version actuelle. |
 
 ## Ordre suggéré

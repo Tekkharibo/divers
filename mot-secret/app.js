@@ -23,8 +23,16 @@
   const ANSWERS_PER_PAGE = 10;
   // En français, Y est classé avec les voyelles.
   const VOWELS = "AEIOUY";
-  // Options de lisibilité (cases à cocher) → classe ajoutée sur chaque page.
-  const READABILITY = { lowercase: "is-lower", bigText: "is-big", spaced: "is-spaced", colorVowels: "is-colored" };
+  // Options de page (cases à cocher, id = clé) → classe ajoutée sur chaque page.
+  const PAGE_OPTIONS = {
+    lowercase: "is-lower",
+    bigText: "is-big",
+    spaced: "is-spaced",
+    colorVowels: "is-colored",
+    blackWhite: "is-bw",
+  };
+  // Suffixe ?v=… de ce script, réutilisé pour charger les bibliothèques PDF à la demande.
+  const VERSION = document.currentScript ? new URL(document.currentScript.src).search : "";
   // Positions des pictos décoratifs en fond de page (en % de la page) et taille en mm.
   const DECOR_SPOTS = [
     { x: -4, y: -2, s: 46, r: -15 },
@@ -64,6 +72,7 @@
     bigText: false,
     spaced: false,
     colorVowels: false,
+    blackWhite: false,
     seed: 1,
   };
 
@@ -175,7 +184,7 @@
   function blankPage(cls) {
     const theme = THEMES[state.theme];
     const page = h("section", "page " + cls);
-    Object.entries(READABILITY).forEach(([opt, c]) => state[opt] && page.classList.add(c));
+    Object.entries(PAGE_OPTIONS).forEach(([opt, c]) => state[opt] && page.classList.add(c));
     page.style.setProperty("--bg-top", theme.bg[0]);
     page.style.setProperty("--bg-bottom", theme.bg[1]);
     page.style.setProperty("--accent", theme.accent);
@@ -339,6 +348,70 @@
     els.preview.style.zoom = Math.min(1, avail / pageWidthPx);
   }
 
+  // ---------- Export PDF direct ----------
+  // Chaque page est dessinée en image (html2canvas) puis assemblée dans un PDF A4 (jsPDF).
+  // Les bibliothèques (vendor/) ne sont chargées qu'au premier export.
+  const loadScript = (src) =>
+    new Promise((ok, ko) => {
+      const s = document.createElement("script");
+      s.src = src + VERSION;
+      s.onload = ok;
+      s.onerror = () => ko(new Error("chargement de " + src));
+      document.head.appendChild(s);
+    });
+  let pdfLibs = null;
+  const loadPdfLibs = () =>
+    (pdfLibs ||= Promise.all([loadScript("vendor/html2canvas.min.js"), loadScript("vendor/jspdf.umd.min.js")]).catch(
+      (e) => {
+        pdfLibs = null;
+        throw e;
+      }
+    ));
+
+  // Noir et blanc : html2canvas ignore les filtres CSS, on passe donc l'image entière en gris.
+  function toGray(canvas) {
+    const ctx = canvas.getContext("2d");
+    const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const d = img.data;
+    for (let i = 0; i < d.length; i += 4) {
+      const y = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+      d[i] = d[i + 1] = d[i + 2] = y;
+    }
+    ctx.putImageData(img, 0, 0);
+  }
+
+  async function exportPdf() {
+    const pages = [...els.preview.querySelectorAll(".page")];
+    if (!pages.length) return;
+    const buttons = document.querySelectorAll(".js-pdf");
+    const setLabel = (t) => buttons.forEach((b) => (b.textContent = t));
+    buttons.forEach((b) => (b.disabled = true));
+    // Copie hors écran, sans le zoom de l'aperçu, au format A4 complet.
+    const stage = h("div", "pdf-stage");
+    document.body.appendChild(stage);
+    try {
+      setLabel("⏳ Préparation…");
+      await loadPdfLibs();
+      if (document.fonts) await document.fonts.ready;
+      const doc = new window.jspdf.jsPDF({ unit: "mm", format: "a4", compress: true });
+      for (let i = 0; i < pages.length; i++) {
+        setLabel(`⏳ Page ${i + 1} / ${pages.length}`);
+        const clone = pages[i].cloneNode(true);
+        stage.replaceChildren(clone);
+        const canvas = await window.html2canvas(clone, { scale: 2, backgroundColor: "#ffffff", logging: false });
+        if (state.blackWhite) toGray(canvas);
+        if (i > 0) doc.addPage();
+        doc.addImage(canvas.toDataURL("image/jpeg", 0.85), "JPEG", 0, 0, 210, 297);
+      }
+      doc.save(`mot-secret-${state.theme}.pdf`);
+    } catch (e) {
+      alert(`Impossible de créer le PDF (${e.message}).\nUtilise le bouton « Imprimer » à la place.`);
+    } finally {
+      stage.remove();
+      buttons.forEach((b) => ((b.disabled = false), (b.textContent = b.dataset.label)));
+    }
+  }
+
   // ---------- Interface ----------
   // Remplace la liste par les 20 mots prédéfinis du thème, dans l'ordre (pas de tirage au sort).
   function useThemeWords() {
@@ -387,7 +460,7 @@
     els.correction.value = state.correction;
     els.showName.checked = state.showName;
     els.showNumber.checked = state.showNumber;
-    Object.keys(READABILITY).forEach((opt) => {
+    Object.keys(PAGE_OPTIONS).forEach((opt) => {
       const input = $("#" + opt);
       input.checked = state[opt];
       input.addEventListener("change", () => ((state[opt] = input.checked), render()));
@@ -402,6 +475,10 @@
     els.themeWords.addEventListener("click", useThemeWords);
     els.shuffle.addEventListener("click", () => (state.seed++, render()));
     document.querySelectorAll(".js-print").forEach((b) => b.addEventListener("click", () => window.print()));
+    document.querySelectorAll(".js-pdf").forEach((b) => {
+      b.dataset.label = b.textContent;
+      b.addEventListener("click", exportPdf);
+    });
     window.addEventListener("resize", fitPreview);
     window.addEventListener("beforeprint", () => (els.preview.style.zoom = 1));
     window.addEventListener("afterprint", fitPreview);

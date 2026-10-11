@@ -104,6 +104,7 @@ textarea { resize: vertical; text-transform: none; }
   background: #fff;
   color: inherit;
 }
+.actions button:disabled, .mobile-bar button:disabled { opacity: 0.7; cursor: progress; }
 .actions .primary { background: var(--ui-primary); border-color: var(--ui-primary); color: #fff; }
 .warnings { color: #b3261e; font-size: 13.5px; margin: 10px 0 0; }
 .warnings:empty { display: none; }
@@ -221,6 +222,13 @@ textarea { resize: vertical; text-transform: none; }
 .is-spaced .answer-box { border: var(--line); border-radius: 1.5mm; }
 .is-spaced .page-head h2 { letter-spacing: 0.04em; }
 
+/* Noir et blanc : fond blanc, sans décor, dessins en gris, titres et lettres en noir */
+.page.is-bw { background: #fff; --accent: #111 !important; }
+.is-bw .decor { display: none; }
+.is-bw .icon, .is-bw .word-icon { filter: grayscale(1) contrast(1.1); }
+.is-bw .vowel, .is-bw .consonant { color: #111; }
+.is-bw .badge { background: #fff; color: #111; border: 0.4mm solid #111; }
+
 /* Page de correction : une ligne par mot, même largeur pour toutes */
 .answers { display: flex; flex-direction: column; gap: 8mm; width: 170mm; }
 .answer-row { display: flex; align-items: center; gap: 6mm; }
@@ -294,3 +302,7 @@ html { scroll-behavior: smooth; }
    la page à la largeur imprimable (≈ 182/210). Une fiche de 297 mm dépasserait alors la hauteur
    imprimable (≈ 249 mm) et déborderait sur une page blanche → fiche moins haute. */
 .print-safe .page { height: 280mm; }
+
+/* Export PDF : copie de travail hors écran, au format A4 complet */
+.pdf-stage { position: fixed; left: -10000px; top: 0; }
+html .pdf-stage .page { height: 297mm; box-shadow: none; margin: 0; }

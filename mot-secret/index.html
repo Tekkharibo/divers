@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mot secret</title>
   <!-- ?v=… : changer la date à chaque mise à jour pour que les navigateurs rechargent les fichiers -->
-  <link rel="stylesheet" href="fonts/fonts.css?v=2026-10-11d" />
-  <link rel="stylesheet" href="style.css?v=2026-10-11d" />
+  <link rel="stylesheet" href="fonts/fonts.css?v=2026-10-11e" />
+  <link rel="stylesheet" href="style.css?v=2026-10-11e" />
 </head>
 <body>
   <aside id="settings" class="panel">
@@ -40,6 +40,7 @@
 
     <label class="check"><input id="showName" type="checkbox" /> Ligne « Prénom »</label>
     <label class="check"><input id="showNumber" type="checkbox" checked /> Numéroter les fiches</label>
+    <label class="check"><input id="blackWhite" type="checkbox" /> Noir et blanc (économie d'encre)</label>
 
     <fieldset class="group">
       <legend>Lisibilité (dys, troubles visuels)</legend>
@@ -55,11 +56,12 @@
 
     <div class="actions">
       <button id="shuffle" type="button" class="secondary">🔀 Mélanger les dessins</button>
-      <button type="button" class="primary js-print">🖨️ Imprimer (A4)</button>
+      <button type="button" class="primary js-pdf">📄 Télécharger le PDF (A4)</button>
+      <button type="button" class="secondary js-print">🖨️ Imprimer</button>
     </div>
     <p id="warnings" class="warnings"></p>
-    <p class="hint small">Astuce : dans la fenêtre d'impression, choisir A4, marges « Aucune » et cocher « Graphiques d'arrière-plan ».
-      Sur smartphone : « Imprimer » puis « Enregistrer en PDF » (Android) ou partager / imprimer le PDF (iPhone).</p>
+    <p class="hint small">Le PDF téléchargé est prêt à imprimer, sur ordinateur comme sur tablette ou smartphone.
+      Avec « Imprimer » : choisir A4, marges « Aucune » et cocher « Graphiques d'arrière-plan ».</p>
   </aside>
 
   <main id="apercu" class="preview-wrap">
@@ -69,10 +71,10 @@
   <nav class="mobile-bar" aria-label="Navigation">
     <a href="#settings">⚙️ Réglages</a>
     <a href="#apercu">👀 Aperçu</a>
-    <button type="button" class="js-print">🖨️ Imprimer</button>
+    <button type="button" class="js-pdf">📄 PDF</button>
   </nav>
 
-  <script src="themes.js?v=2026-10-11d"></script>
-  <script src="app.js?v=2026-10-11d"></script>
+  <script src="themes.js?v=2026-10-11e"></script>
+  <script src="app.js?v=2026-10-11e"></script>
 </body>
 </html>
