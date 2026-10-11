@@ -47,6 +47,25 @@ Un lien « ✉️ Une idée, un problème ? » en bas du panneau, qui ouvre la m
 - Option avancée : importer une image (gardée dans le navigateur). Elle ne pourra pas passer
   dans le lien de partage, car elle est trop lourde.
 
+### 6. Mode « imagier » : chaque lettre devient un dessin qui commence par cette lettre — M
+
+Variante du jeu : au lieu de cacher seulement quelques lettres derrière des dessins au hasard, **chaque lettre
+du mot est remplacée par un dessin dont le nom commence par cette lettre**. Exemple : B → 🐳 baleine,
+donc « BOL » s'écrit 🐳 🍊 🦁 (baleine, orange, lion). L'enfant retrouve chaque lettre grâce au premier son du mot.
+
+- Un alphabet illustré fixe de 26 dessins (A abeille, B baleine, C cochon, D dauphin, E escargot, F fraise,
+  G girafe, L lion, M maison, P pomme, R renard, S soleil, T tortue, V vache, Z zèbre…), indépendant du thème.
+- Deux niveaux :
+  - **Facile** : la grille de l'alphabet affiche chaque dessin avec sa lettre, comme un imagier qui sert de clé.
+  - **Difficile** : pas de clé, l'enfant doit trouver la lettre seul à partir du nom du dessin.
+- Choisir des mots dont le **premier son** correspond bien à la lettre, pour ne pas piéger l'enfant :
+  « cochon » plutôt que « chat » pour C, « orange » plutôt que « oiseau » pour O.
+- Lettres difficiles à illustrer, à valider : H (le H ne s'entend pas : hibou, hérisson), K (koala, kiwi),
+  Q (quilles), U (usine), W (wagon), X (aucun emoji « xylophone » : à remplacer par un dessin maison ou
+  laisser la lettre visible), Y (yoyo).
+- Vérifier que chaque dessin existe dans Fluent Emoji (`tools/copy-fluent-emoji.js` signale les manquants).
+- La correction reste la même : le mot écrit en lettres.
+
 ## En attente
 
 ### 5. Compléter une fiche à l'ordinateur ou à la tablette — L
@@ -80,5 +99,6 @@ Un mode où l'enfant tape les lettres directement dans les cases au lieu d'impri
 1. Bouton contact (n° 3) : rapide et utile pour recevoir des retours.
 2. Partage par lien (n° 2) : sert de base au mode vidéoprojecteur, au contact et au mode en ligne.
 3. Mode vidéoprojecteur (n° 1).
-4. Fond personnalisé et économie d'encre (n° 4).
-5. Mode en ligne (n° 5), si le besoin se confirme.
+4. Fond personnalisé (n° 4).
+5. Mode « imagier » (n° 6).
+6. Mode en ligne (n° 5), si le besoin se confirme.
