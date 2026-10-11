@@ -70,7 +70,8 @@ Un mode où l'enfant tape les lettres directement dans les cases au lieu d'impri
 | Niveaux de difficulté | M | Facile : quelques lettres déjà écrites. Difficile : dessins pièges sur des lettres absentes du mot. |
 | Nouveaux thèmes | S chacun | Rentrée, ferme, espace, animaux, carnaval, galette des rois. |
 | Application installable hors ligne (PWA) | M | Icône sur le téléphone ou l'ordinateur de classe, marche sans réseau. |
-| Dessins SVG maison | L | Rendu identique sur tous les appareils (les emojis varient selon le système). |
+| ~~Dessins SVG~~ ✅ fait | L | Fluent Emoji (Microsoft, MIT) en SVG : rendu identique partout, trait noir en noir et blanc. |
+| PDF vectoriel (texte et dessins nets, fichier léger) | M | Possible maintenant que les dessins sont en SVG (svg2pdf.js). |
 | ~~Export PDF direct~~ ✅ fait | M | Bouton « Télécharger le PDF » (jsPDF + html2canvas, dans le navigateur). |
 | Tag `v1.0` sur `main` | S | Retrouver facilement la version actuelle. |
 

@@ -132,6 +132,7 @@ textarea { resize: vertical; text-transform: none; }
   print-color-adjust: exact;
 }
 .decor { position: absolute; inset: 0; pointer-events: none; }
+.pic { display: block; width: 1em; height: 1em; }
 .decor span { position: absolute; font-family: var(--emoji); line-height: 1; opacity: 0.28; }
 
 .page > *:not(.decor) { position: relative; flex-shrink: 0; } /* jamais écrasé : fitStrips() mesure le vrai débordement */
@@ -161,7 +162,7 @@ textarea { resize: vertical; text-transform: none; }
    sinon, à l'aperçu réduit, Safari arrondit et une case masque la bordure de sa voisine. */
 .alpha-cell.edge-top { border-top: var(--line); }
 .alpha-cell.edge-left { border-left: var(--line); }
-.alpha-cell .icon { font-family: var(--emoji); font-size: 13mm; line-height: 1; }
+.alpha-cell .icon { font-family: var(--emoji); font-size: 15mm; line-height: 1; }
 .alpha-blank { position: relative; }
 .badge {
   width: 11mm;
@@ -198,7 +199,7 @@ textarea { resize: vertical; text-transform: none; }
   justify-content: center;
   line-height: 1;
 }
-.word-icon { font-family: var(--emoji); font-size: calc(var(--cell) * 0.6); }
+.word-icon { font-family: var(--emoji); font-size: calc(var(--cell) * 0.68); }
 .word-answer { font-size: calc(var(--cell) * 0.6); }
 .word-icon { border-top: var(--line); }
 .word-col.edge-left > div { border-left: var(--line); }
@@ -225,7 +226,7 @@ textarea { resize: vertical; text-transform: none; }
 /* Noir et blanc : fond blanc, sans décor, dessins en gris, titres et lettres en noir */
 .page.is-bw { background: #fff; --accent: #111 !important; }
 .is-bw .decor { display: none; }
-.is-bw .icon, .is-bw .word-icon { filter: grayscale(1) contrast(1.1); }
+.is-bw .pic-native { filter: grayscale(1) contrast(1.1); }
 .is-bw .vowel, .is-bw .consonant { color: #111; }
 .is-bw .badge { background: #fff; color: #111; border: 0.4mm solid #111; }
 

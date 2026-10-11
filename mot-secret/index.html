@@ -4,9 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mot secret</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>" />
   <!-- ?v=… : changer la date à chaque mise à jour pour que les navigateurs rechargent les fichiers -->
-  <link rel="stylesheet" href="fonts/fonts.css?v=2026-10-11e" />
-  <link rel="stylesheet" href="style.css?v=2026-10-11e" />
+  <link rel="stylesheet" href="fonts/fonts.css?v=2026-10-11g" />
+  <link rel="stylesheet" href="style.css?v=2026-10-11g" />
 </head>
 <body>
   <aside id="settings" class="panel">
@@ -29,6 +30,15 @@
       <input id="title" type="text" placeholder="Trouve le mot secret !" />
     </label>
 
+
+    <label class="field">
+      <span>Dessins</span>
+      <select id="emojiStyle">
+        <option value="flat">Fluent – plat (recommandé)</option>
+        <option value="color">Fluent – couleur détaillée</option>
+        <option value="native">Emojis de l'appareil</option>
+      </select>
+    </label>
 
     <label class="field">
       <span>Correction</span>
@@ -74,7 +84,7 @@
     <button type="button" class="js-pdf">📄 PDF</button>
   </nav>
 
-  <script src="themes.js?v=2026-10-11e"></script>
-  <script src="app.js?v=2026-10-11e"></script>
+  <script src="themes.js?v=2026-10-11g"></script>
+  <script src="app.js?v=2026-10-11g"></script>
 </body>
 </html>

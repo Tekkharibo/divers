@@ -51,6 +51,7 @@
     words: $("#words"),
     title: $("#title"),
     font: $("#font"),
+    emojiStyle: $("#emojiStyle"),
     correction: $("#correction"),
     showName: $("#showName"),
     showNumber: $("#showNumber"),
@@ -65,6 +66,7 @@
     words: "hiver\nneige\nbonhomme de neige",
     title: "",
     font: "andika",
+    emojiStyle: "flat",
     correction: "end",
     showName: false,
     showNumber: true,
@@ -84,6 +86,7 @@
     } catch (_) {}
     if (!THEMES[state.theme]) state.theme = "hiver";
     if (!FONTS[state.font]) state.font = "andika";
+    if (!["flat", "color", "native"].includes(state.emojiStyle)) state.emojiStyle = "flat";
     if (state.correction !== "none") state.correction = "end";
   }
   function save() {
@@ -177,6 +180,23 @@
     if (html !== undefined) e.innerHTML = html;
     return e;
   };
+  // Dessins : Fluent Emoji (Microsoft, MIT) en SVG dans emoji/{flat,color,hc}/, identiques sur tous
+  // les appareils ; en noir et blanc, variante « High Contrast » (trait noir). « native » = emojis du système.
+  const emojiFile = (e) =>
+    [...e]
+      .map((c) => c.codePointAt(0))
+      .filter((c) => c !== 0xfe0f)
+      .map((c) => c.toString(16))
+      .join("-");
+  function pic(e) {
+    if (state.emojiStyle === "native") return h("span", "pic-native", e);
+    const img = document.createElement("img");
+    img.className = "pic";
+    img.alt = "";
+    img.draggable = false;
+    img.src = `emoji/${state.blackWhite ? "hc" : state.emojiStyle}/${emojiFile(e)}.svg${VERSION}`;
+    return img;
+  }
   const letterEl = (l) => h("span", "letter " + (VOWELS.includes(l) ? "vowel" : "consonant"), l);
   const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
@@ -193,7 +213,8 @@
 
     const decor = h("div", "decor");
     DECOR_SPOTS.forEach((spot, i) => {
-      const d = h("span", "", theme.decor[i % theme.decor.length]);
+      const d = h("span");
+      d.appendChild(pic(theme.decor[i % theme.decor.length]));
       d.style.cssText = `left:${spot.x}%;top:${spot.y}%;font-size:${spot.s}mm;transform:rotate(${spot.r}deg)`;
       decor.appendChild(d);
     });
@@ -225,7 +246,7 @@
       // Bordures haut/gauche seulement sur les bords de la grille (Y n'a pas de voisin à gauche).
       const edges = (i < 4 ? " edge-top" : "") + (i % 4 === 0 || l === "Y" ? " edge-left" : "");
       const cell = h("div", "alpha-cell" + edges);
-      if (icon) cell.appendChild(h("span", "icon", icon));
+      if (icon) cell.appendChild(h("span", "icon")).appendChild(pic(icon));
       else cell.appendChild(letterEl(l));
       grid.appendChild(cell);
     });
@@ -248,7 +269,8 @@
           const col = h("div", "word-col" + (t.kind === "char" ? " is-char" : ti === 0 ? " edge-left" : ""));
           if (t.kind === "letter") {
             // Lettre sans picto (thème à court de dessins) : donnée en indice.
-            col.appendChild(h("div", "word-icon", puzzle.iconOf[t.letter] || t.letter));
+            const icon = puzzle.iconOf[t.letter];
+            col.appendChild(h("div", "word-icon", icon ? undefined : t.letter)).append(...(icon ? [pic(icon)] : []));
             col.appendChild(h("div", "word-answer"));
           } else {
             col.appendChild(h("div", "word-icon"));
@@ -457,6 +479,7 @@
       })
     );
     els.font.value = state.font;
+    els.emojiStyle.value = state.emojiStyle;
     els.correction.value = state.correction;
     els.showName.checked = state.showName;
     els.showNumber.checked = state.showNumber;
@@ -469,6 +492,7 @@
     els.words.addEventListener("input", () => ((state.words = els.words.value), render()));
     els.title.addEventListener("input", () => ((state.title = els.title.value), render()));
     els.font.addEventListener("change", () => ((state.font = els.font.value), render()));
+    els.emojiStyle.addEventListener("change", () => ((state.emojiStyle = els.emojiStyle.value), render()));
     els.correction.addEventListener("change", () => ((state.correction = els.correction.value), render()));
     els.showName.addEventListener("change", () => ((state.showName = els.showName.checked), render()));
     els.showNumber.addEventListener("change", () => ((state.showNumber = els.showNumber.checked), render()));
