@@ -71,7 +71,10 @@
     // "secret" : quelques lettres cachées par les dessins du thème.
     // "imagier" : chaque lettre devient un dessin qui commence par cette lettre (B → baleine).
     game: "secret",
-    imagierLevel: "key", // "key" : grille imagier (dessin + lettre) ; "nokey" : sans grille
+    // Niveau de l'imagier : "key" (facile) grille imagier complète, dessin + lettre ;
+    // "mid" (moyen) grille du mot secret, seules les lettres du mot remplacées par leur dessin ;
+    // "nokey" (difficile) sans grille.
+    imagierLevel: "key",
     font: "andika",
     correction: "end",
     showName: false,
@@ -93,7 +96,7 @@
     if (!THEMES[state.theme]) state.theme = "hiver";
     if (!FONTS[state.font]) state.font = "andika";
     if (!["secret", "imagier"].includes(state.game)) state.game = "secret";
-    if (!["key", "nokey"].includes(state.imagierLevel)) state.imagierLevel = "key";
+    if (!["key", "mid", "nokey"].includes(state.imagierLevel)) state.imagierLevel = "key";
     if (state.correction !== "none") state.correction = "end";
   }
   function save() {
@@ -243,15 +246,18 @@
     head.appendChild(h("h2", "", title));
     if (state.showName) head.appendChild(h("p", "name-line", "Prénom : <span></span>"));
     const imagier = state.game === "imagier";
-    const withKey = !imagier || state.imagierLevel === "key";
+    const level = imagier ? state.imagierLevel : null;
     if (imagier) {
-      const consigne = withKey
-        ? "Chaque dessin cache la première lettre de son nom : cherche-le dans l'imagier."
-        : "Écris la première lettre du nom de chaque dessin.";
+      const consigne = {
+        key: "Chaque dessin cache la première lettre de son nom : cherche-le dans l'imagier.",
+        mid: "Chaque dessin cache la première lettre de son nom : trouve sa place dans l'alphabet.",
+        nokey: "Écris la première lettre du nom de chaque dessin.",
+      }[level];
       head.appendChild(h("p", "instruction", consigne));
     }
     page.appendChild(head);
-    if (withKey) page.appendChild(renderGrid(puzzle, imagier));
+    // Moyen : même grille que le mot secret (dessins de l'imagier à la place des lettres du mot).
+    if (level !== "nokey") page.appendChild(renderGrid(puzzle, level === "key"));
     else if (state.showNumber) page.appendChild(h("span", "badge badge-solo", String(puzzle.index)));
     page.appendChild(renderStrip(puzzle));
     return page;

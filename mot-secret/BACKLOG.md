@@ -57,6 +57,7 @@ donc « BOL » s'écrit 🐳 🍊 🦁 (baleine, orange, lion). L'enfant retrouv
   G girafe, L lion, M maison, P pomme, R renard, S soleil, T tortue, V vache, Z zèbre…), indépendant du thème.
 - Deux niveaux :
   - **Facile** : la grille de l'alphabet affiche chaque dessin avec sa lettre, comme un imagier qui sert de clé.
+  - **Moyen** (ajouté) : grille du mot secret, seules les lettres du mot sont remplacées par leur dessin.
   - **Difficile** : pas de clé, l'enfant doit trouver la lettre seul à partir du nom du dessin.
 - Choisir des mots dont le **premier son** correspond bien à la lettre, pour ne pas piéger l'enfant :
   « cochon » plutôt que « chat » pour C, « orange » plutôt que « oiseau » pour O.
