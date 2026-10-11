@@ -229,6 +229,16 @@ textarea { resize: vertical; text-transform: none; }
 .is-bw .vowel, .is-bw .consonant { color: #111; }
 .is-bw .badge { background: #fff; color: #111; border: 0.4mm solid #111; }
 
+/* Imagier : la grille sert de clé (dessin + lettre dans chaque case) */
+.alpha.is-key .alpha-cell { flex-direction: column; gap: 0.6mm; }
+.alpha.is-key .icon { font-size: 13mm; }
+.alpha.is-key .letter { font-size: 6mm; line-height: 1; }
+.is-big .alpha.is-key .letter { font-size: 8mm; }
+.instruction { margin: 2.5mm 0 0; font-size: 4.5mm; color: #333; }
+.badge-solo { margin: 6mm 0 0; }
+.page > .badge-solo + .word { margin-top: 10mm; }
+[hidden] { display: none !important; }
+
 /* Page de correction : une ligne par mot, même largeur pour toutes */
 .answers { display: flex; flex-direction: column; gap: 8mm; width: 170mm; }
 .answer-row { display: flex; align-items: center; gap: 6mm; }

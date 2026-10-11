@@ -47,7 +47,7 @@ Un lien « ✉️ Une idée, un problème ? » en bas du panneau, qui ouvre la m
 - Option avancée : importer une image (gardée dans le navigateur). Elle ne pourra pas passer
   dans le lien de partage, car elle est trop lourde.
 
-### 6. Mode « imagier » : chaque lettre devient un dessin qui commence par cette lettre — M
+### 6. ✅ Mode « imagier » : chaque lettre devient un dessin qui commence par cette lettre — M (fait)
 
 Variante du jeu : au lieu de cacher seulement quelques lettres derrière des dessins au hasard, **chaque lettre
 du mot est remplacée par un dessin dont le nom commence par cette lettre**. Exemple : B → 🐳 baleine,
@@ -63,6 +63,8 @@ donc « BOL » s'écrit 🐳 🍊 🦁 (baleine, orange, lion). L'enfant retrouv
 - Lettres difficiles à illustrer, à valider : H (le H ne s'entend pas : hibou, hérisson), K (koala, kiwi),
   Q (quilles), U (usine), W (wagon), X (aucun emoji « xylophone » : à remplacer par un dessin maison ou
   laisser la lettre visible), Y (yoyo).
+  → Fait avec : C cochon, H hibou, I île, J jus, K koala, O orange, Q quilles, U usine, W wagon, Y yoyo.
+  **X reste écrit en lettre pour l'instant** (dessin à trouver).
 - Vérifier que chaque dessin existe dans Fluent Emoji (`tools/copy-fluent-emoji.js` signale les manquants).
 - La correction reste la même : le mot écrit en lettres.
 
@@ -100,5 +102,4 @@ Un mode où l'enfant tape les lettres directement dans les cases au lieu d'impri
 2. Partage par lien (n° 2) : sert de base au mode vidéoprojecteur, au contact et au mode en ligne.
 3. Mode vidéoprojecteur (n° 1).
 4. Fond personnalisé (n° 4).
-5. Mode « imagier » (n° 6).
 6. Mode en ligne (n° 5), si le besoin se confirme.

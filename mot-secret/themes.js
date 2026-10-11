@@ -104,3 +104,34 @@ window.THEME_GROUPS = [
   { label: "Fêtes", keys: ["halloween", "noel", "valentin", "paques", "anniversaire"] },
   { label: "Autres", keys: ["mer"] },
 ];
+
+// Mode « imagier » : chaque lettre devient un dessin dont le nom commence par cette lettre.
+// Mots choisis pour que le premier son corresponde à la lettre (cochon plutôt que chat).
+// X : pas encore de dessin, la lettre reste écrite.
+window.PICTURE_ALPHABET = {
+  A: ["🐝", "abeille"],
+  B: ["🐳", "baleine"],
+  C: ["🐷", "cochon"],
+  D: ["🐬", "dauphin"],
+  E: ["🐌", "escargot"],
+  F: ["🍓", "fraise"],
+  G: ["🦒", "girafe"],
+  H: ["🦉", "hibou"],
+  I: ["🏝️", "île"],
+  J: ["🧃", "jus"],
+  K: ["🐨", "koala"],
+  L: ["🦁", "lion"],
+  M: ["🏠", "maison"],
+  N: ["☁️", "nuage"],
+  O: ["🍊", "orange"],
+  P: ["🍎", "pomme"],
+  Q: ["🎳", "quilles"],
+  R: ["🦊", "renard"],
+  S: ["☀️", "soleil"],
+  T: ["🐢", "tortue"],
+  U: ["🏭", "usine"],
+  V: ["🐄", "vache"],
+  W: ["🚃", "wagon"],
+  Y: ["🪀", "yoyo"],
+  Z: ["🦓", "zèbre"],
+};

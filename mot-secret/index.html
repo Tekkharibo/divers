@@ -6,8 +6,8 @@
   <title>Mot secret</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>" />
   <!-- ?v=… : changer la date à chaque mise à jour pour que les navigateurs rechargent les fichiers -->
-  <link rel="stylesheet" href="fonts/fonts.css?v=2026-10-11h" />
-  <link rel="stylesheet" href="style.css?v=2026-10-11h" />
+  <link rel="stylesheet" href="fonts/fonts.css?v=2026-10-11i" />
+  <link rel="stylesheet" href="style.css?v=2026-10-11i" />
 </head>
 <body>
   <aside id="settings" class="panel">
@@ -18,6 +18,21 @@
       <span id="themes-label">Thème</span>
       <div id="themes" class="themes" role="radiogroup" aria-labelledby="themes-label"></div>
     </div>
+
+    <label class="field">
+      <span>Jeu</span>
+      <select id="game">
+        <option value="secret">Mot secret : quelques lettres cachées par des dessins</option>
+        <option value="imagier">Imagier : chaque lettre devient un dessin (B → baleine)</option>
+      </select>
+    </label>
+    <label class="field" id="imagierLevelField" hidden>
+      <span>Niveau de l'imagier</span>
+      <select id="imagierLevel">
+        <option value="key">Facile : avec l'imagier (dessin + lettre)</option>
+        <option value="nokey">Difficile : sans imagier</option>
+      </select>
+    </label>
 
     <label class="field">
       <span>Mots (un par ligne)</span>
@@ -75,7 +90,7 @@
     <button type="button" class="js-pdf">📄 PDF</button>
   </nav>
 
-  <script src="themes.js?v=2026-10-11h"></script>
-  <script src="app.js?v=2026-10-11h"></script>
+  <script src="themes.js?v=2026-10-11i"></script>
+  <script src="app.js?v=2026-10-11i"></script>
 </body>
 </html>

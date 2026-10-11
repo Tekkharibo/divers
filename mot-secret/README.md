@@ -10,8 +10,12 @@ de la bande de dessins en bas de page. Une page de correction récapitule tous l
 Ouvrir `index.html` dans un navigateur (aucune installation, aucun serveur nécessaire).
 
 1. Choisir un thème (Hiver, Automne, Pâques, Noël, Halloween, Saint-Valentin, Été, Printemps, Anniversaire, Mer).
-2. Saisir un mot par ligne, ou cliquer « Utiliser les 20 mots du thème » (liste fixe par thème, dans `themes.js`) (accents ignorés, les espaces séparent les mots, `-` et `'` sont recopiés).
-3. « Télécharger le PDF (A4) » : PDF prêt à imprimer, généré dans le navigateur (marche aussi sur iPad / smartphone).
+2. Choisir le jeu :
+   - **Mot secret** : quelques lettres de l'alphabet sont cachées par des dessins du thème.
+   - **Imagier** : chaque lettre du mot devient un dessin dont le nom commence par cette lettre (B → baleine),
+     avec la grille imagier comme clé (facile) ou sans (difficile). Alphabet dans `themes.js` (`PICTURE_ALPHABET`).
+3. Saisir un mot par ligne, ou cliquer « Utiliser les 20 mots du thème » (liste fixe par thème, dans `themes.js`) (accents ignorés, les espaces séparent les mots, `-` et `'` sont recopiés).
+4. « Télécharger le PDF (A4) » : PDF prêt à imprimer, généré dans le navigateur (marche aussi sur iPad / smartphone).
    Ou « Imprimer » : choisir A4, marges « Aucune », cocher « Graphiques d'arrière-plan ».
 
 Lisibilité (enfants dys, troubles visuels) : police adaptée (Andika par défaut, OpenDyslexic, Lexend,

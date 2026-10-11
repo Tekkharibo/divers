@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// Copie dans emoji/ les dessins Fluent Emoji (Microsoft, licence MIT) utilisés par themes.js.
+// Copie dans emoji/ les dessins Fluent Emoji (Microsoft, licence MIT) utilisés par themes.js
+// (thèmes et alphabet de l'imagier).
 // Usage : node tools/copy-fluent-emoji.js /chemin/vers/fluentui-emoji
 //   (clone de https://github.com/microsoft/fluentui-emoji ; seuls les SVG sont nécessaires)
 // Fichiers produits : emoji/{flat,hc}/<points de code hexadécimaux séparés par "-">.svg
@@ -32,6 +33,7 @@ for (const dir of fs.readdirSync(assets)) {
 
 const used = new Set();
 for (const t of Object.values(window.THEMES)) [...t.icons, ...t.decor].forEach((e) => used.add(e));
+for (const [e] of Object.values(window.PICTURE_ALPHABET || {})) used.add(e);
 
 const styles = { flat: "Flat", hc: "High Contrast" };
 const missing = [];

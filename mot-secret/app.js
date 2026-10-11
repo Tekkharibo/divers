@@ -2,6 +2,7 @@
   "use strict";
 
   const THEMES = window.THEMES;
+  const PICTURE_ALPHABET = window.PICTURE_ALPHABET;
   // Safari et tous les navigateurs iPhone/iPad (WebKit) ignorent « @page { margin: 0 } » et ajoutent
   // leurs marges + en-tête/pied de page : la fiche A4 pleine taille serait coupée et déborderait.
   // On imprime alors la fiche réduite (voir .print-safe dans style.css).
@@ -55,6 +56,9 @@
     showName: $("#showName"),
     showNumber: $("#showNumber"),
     shuffle: $("#shuffle"),
+    game: $("#game"),
+    imagierLevel: $("#imagierLevel"),
+    imagierLevelField: $("#imagierLevelField"),
     themeWords: $("#themeWords"),
     warnings: $("#warnings"),
     preview: $("#preview"),
@@ -64,6 +68,10 @@
     theme: "hiver",
     words: "hiver\nneige\nbonhomme de neige",
     title: "",
+    // "secret" : quelques lettres cachées par les dessins du thème.
+    // "imagier" : chaque lettre devient un dessin qui commence par cette lettre (B → baleine).
+    game: "secret",
+    imagierLevel: "key", // "key" : grille imagier (dessin + lettre) ; "nokey" : sans grille
     font: "andika",
     correction: "end",
     showName: false,
@@ -84,6 +92,8 @@
     } catch (_) {}
     if (!THEMES[state.theme]) state.theme = "hiver";
     if (!FONTS[state.font]) state.font = "andika";
+    if (!["secret", "imagier"].includes(state.game)) state.game = "secret";
+    if (!["key", "nokey"].includes(state.imagierLevel)) state.imagierLevel = "key";
     if (state.correction !== "none") state.correction = "end";
   }
   function save() {
@@ -156,6 +166,12 @@
       if (t.kind === "letter" && !unique.includes(t.letter)) unique.push(t.letter);
     });
     if (!unique.length) return null;
+    const longest = Math.max(...groups.flatMap((g) => segments(g).map((s) => s.length)));
+    if (state.game === "imagier") {
+      const iconOf = {};
+      unique.forEach((l) => PICTURE_ALPHABET[l] && (iconOf[l] = PICTURE_ALPHABET[l][0]));
+      return { raw, index, groups, iconOf, tooMany: false, longest };
+    }
     const rand = mulberry32(hash(`${state.theme}|${raw}|${state.seed}`));
     const icons = shuffled(theme.icons, rand);
     const iconOf = {};
@@ -166,7 +182,7 @@
       groups,
       iconOf,
       tooMany: unique.length > theme.icons.length,
-      longest: Math.max(...groups.flatMap((g) => segments(g).map((s) => s.length))),
+      longest,
     };
   }
 
@@ -225,10 +241,26 @@
     const title = esc(state.title.trim() || "Trouve le mot secret !");
     head.appendChild(h("h2", "", title));
     if (state.showName) head.appendChild(h("p", "name-line", "Prénom : <span></span>"));
+    const imagier = state.game === "imagier";
+    const withKey = !imagier || state.imagierLevel === "key";
+    if (imagier) {
+      const consigne = withKey
+        ? "Chaque dessin cache la première lettre de son nom : cherche-le dans l'imagier."
+        : "Écris la première lettre du nom de chaque dessin.";
+      head.appendChild(h("p", "instruction", consigne));
+    }
     page.appendChild(head);
+    if (withKey) page.appendChild(renderGrid(puzzle, imagier));
+    else if (state.showNumber) page.appendChild(h("span", "badge badge-solo", String(puzzle.index)));
+    page.appendChild(renderStrip(puzzle));
+    return page;
+  }
 
-    // Grille alphabet : 6 lignes de 4 (A→X) puis Y, Z centrés.
-    const grid = h("div", "alpha");
+  // Grille alphabet : 6 lignes de 4 (A→X) puis Y, Z centrés.
+  // Mot secret : les lettres du mot sont remplacées par leur dessin.
+  // Imagier : chaque case montre son dessin et sa lettre (X : lettre seule, pas encore de dessin).
+  function renderGrid(puzzle, imagier) {
+    const grid = h("div", "alpha" + (imagier ? " is-key" : ""));
     const cells = ALPHABET.slice(0, 24);
     cells.push(null, "Y", "Z", null);
     cells.forEach((l, i) => {
@@ -242,18 +274,25 @@
       // Bordures haut/gauche seulement sur les bords de la grille (Y n'a pas de voisin à gauche).
       const edges = (i < 4 ? " edge-top" : "") + (i % 4 === 0 || l === "Y" ? " edge-left" : "");
       const cell = h("div", "alpha-cell" + edges);
-      if (icon) cell.appendChild(h("span", "icon")).appendChild(pic(icon));
+      if (imagier) {
+        if (PICTURE_ALPHABET[l]) cell.appendChild(h("span", "icon")).appendChild(pic(PICTURE_ALPHABET[l][0]));
+        cell.appendChild(letterEl(l));
+      } else if (icon) cell.appendChild(h("span", "icon")).appendChild(pic(icon));
       else cell.appendChild(letterEl(l));
       grid.appendChild(cell);
     });
-    page.appendChild(grid);
+    return grid;
+  }
 
+  function renderStrip(puzzle) {
     // Bande du mot : pictos en haut, cases à remplir en bas.
     // Taille de départ : le plus long morceau tient sur une ligne (max 180 mm).
     // fitStrips() la réduit ensuite si la bande dépasse le bas de la page.
     const gapMm = state.spaced ? 1.5 : 0;
     const longest = Math.max(puzzle.longest, 1);
-    const cellMm = Math.min(30, (180 - (longest - 1) * gapMm) / longest);
+    // Imagier sans grille : toute la page est libre, cases plus grandes.
+    const maxMm = state.game === "imagier" && state.imagierLevel === "nokey" ? 38 : 30;
+    const cellMm = Math.min(maxMm, (180 - (longest - 1) * gapMm) / longest);
     const strip = h("div", "word");
     strip.dataset.cell = cellMm;
     strip.style.setProperty("--cell", `${cellMm}mm`);
@@ -264,7 +303,7 @@
         seg.forEach((t, ti) => {
           const col = h("div", "word-col" + (t.kind === "char" ? " is-char" : ti === 0 ? " edge-left" : ""));
           if (t.kind === "letter") {
-            // Lettre sans picto (thème à court de dessins) : donnée en indice.
+            // Lettre sans dessin (thème à court de dessins, ou X en imagier) : donnée en indice.
             const icon = puzzle.iconOf[t.letter];
             col.appendChild(h("div", "word-icon", icon ? undefined : t.letter)).append(...(icon ? [pic(icon)] : []));
             col.appendChild(h("div", "word-answer"));
@@ -278,9 +317,7 @@
       });
       strip.appendChild(g);
     });
-    page.appendChild(strip);
-
-    return page;
+    return strip;
   }
 
   // Correction : une ligne par mot, toutes de même largeur ; les cases se partagent la largeur
@@ -339,6 +376,9 @@
     if (state.correction === "end") renderAnswerPages(puzzles).forEach((pg) => frag.appendChild(pg));
     if (!puzzles.length) frag.appendChild(h("p", "empty", "Ajoute au moins un mot pour générer une fiche."));
 
+    // Imagier : niveau à choisir ; « Mélanger » ne sert qu'au mot secret (dessins tirés au sort).
+    els.imagierLevelField.hidden = state.game !== "imagier";
+    els.shuffle.hidden = state.game === "imagier";
     els.preview.replaceChildren(frag);
     fitPreview();
     fitStrips();
@@ -475,6 +515,8 @@
       })
     );
     els.font.value = state.font;
+    els.game.value = state.game;
+    els.imagierLevel.value = state.imagierLevel;
     els.correction.value = state.correction;
     els.showName.checked = state.showName;
     els.showNumber.checked = state.showNumber;
@@ -487,6 +529,8 @@
     els.words.addEventListener("input", () => ((state.words = els.words.value), render()));
     els.title.addEventListener("input", () => ((state.title = els.title.value), render()));
     els.font.addEventListener("change", () => ((state.font = els.font.value), render()));
+    els.game.addEventListener("change", () => ((state.game = els.game.value), render()));
+    els.imagierLevel.addEventListener("change", () => ((state.imagierLevel = els.imagierLevel.value), render()));
     els.correction.addEventListener("change", () => ((state.correction = els.correction.value), render()));
     els.showName.addEventListener("change", () => ((state.showName = els.showName.checked), render()));
     els.showNumber.addEventListener("change", () => ((state.showNumber = els.showNumber.checked), render()));
