@@ -289,4 +289,6 @@ html { scroll-behavior: smooth; }
   .preview { display: block; padding: 0; zoom: 1 !important; }
   .page { box-shadow: none; break-after: page; page-break-after: always; }
   .page:last-child { break-after: auto; page-break-after: auto; }
+  /* WebKit : zone imprimable réelle ≈ 182 × 249 mm → fiche à 80 % (168 × 238 mm), centrée */
+  .print-safe .page { zoom: 0.8; margin: 0 auto; }
 }

@@ -2,6 +2,13 @@
   "use strict";
 
   const THEMES = window.THEMES;
+  // Safari et tous les navigateurs iPhone/iPad (WebKit) ignorent « @page { margin: 0 } » et ajoutent
+  // leurs marges + en-tête/pied de page : la fiche A4 pleine taille serait coupée et déborderait.
+  // On imprime alors la fiche réduite (voir .print-safe dans style.css).
+  const ua = navigator.userAgent;
+  if (/AppleWebKit/.test(ua) && !/Chrome|Chromium|Edg|OPR|Android/.test(ua)) {
+    document.documentElement.classList.add("print-safe");
+  }
   const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
   const STORAGE_KEY = "mot-secret:v0";
   // Polices lisibles pour les enfants dys (fichiers dans fonts/).
