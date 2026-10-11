@@ -40,7 +40,7 @@ window.THEMES = {
     accent: "#0a7ea4",
     decor: ["☀️", "🌴", "🐚", "🌊"],
     icons: ["☀️", "🏖️", "🍉", "🍦", "🌴", "🐚", "🩴", "🕶️", "🏄", "🦀", "🍹", "⛱️", "🐠", "🌻", "🐬", "⛵"],
-    words: ["été", "soleil", "plage", "mer", "sable", "vacances", "glace", "piscine", "chapeau", "lunettes", "coquillage", "château", "vague", "crabe", "bateau", "maillot", "pique-nique", "juin", "juillet", "août"],
+    words: ["été", "soleil", "plage", "mer", "sable", "vacances", "glace", "piscine", "chapeau", "lunettes", "coquillage", "vague", "crabe", "bateau", "maillot", "pique-nique", "parasol", "juin", "juillet", "août"],
   },
   halloween: {
     name: "Halloween",
